@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1762209905 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.cpp
+	<iostream>
+	<time.h>
+	<string>
+
+1762210105 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\main.cpp
+	<iostream>
+	<time.h>
+	<string>
+	"Funciones.h"
+
+1762210115 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.h
+
