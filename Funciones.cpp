@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[]){
+bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], int &dia){
     int alimentos, alimentoRecogido;
     system("cls");
     cout<<"Eligio recolectar alimentos"<<endl;
@@ -18,45 +18,37 @@ void recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[]){
             cout << "Pesca en el rio" << endl;
             alimentoRecogido=(rand()%10+0);
             kgAlimentos[0] += alimentoRecogido;
-            cout << "Ha recolectado " << alimentoRecogido << " kg de alimentos" << endl;
-            cout << "Lleva acumulado " << kgAlimentos[0] << " kg de alimentos" << endl;
-            if(porcRefugio[0] >= 100){
-                cout << "Lleva acumulado 100% del refugio" << endl;
-            }else{
-                cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-            }
             break;
         case 2:
             cout << "Cosecha en arbusto" << endl;
             alimentoRecogido=(rand()%5+2);
             kgAlimentos[0] += alimentoRecogido;
-            cout << "Ha recolectado " << alimentoRecogido << " kg de alimentos" << endl;
-            cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
-            if(porcRefugio[0] >= 100){
-                cout << "Lleva acumulado 100% del refugio" << endl;
-            }else{
-                cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-            }
             break;
         case 3:
             cout << "Cosecha en arboles" << endl;
             alimentoRecogido=(rand()%8+3);
             kgAlimentos[0] += alimentoRecogido;
-            cout << "Ha recolectado " << alimentoRecogido << " kg de alimentos" << endl;
-            cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
-            if(porcRefugio[0] >= 100){
-                cout << "Lleva acumulado 100% del refugio" << endl;
-            }else{
-                cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-            }
+            break;
+        default:
+            cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
+            dia -= 1;
+            return false;
             break;
         }
+        cout << "Ha recolectado " << alimentoRecogido << " kg de alimentos" << endl;
+        cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        if(porcRefugio[0] >= 100){
+            cout << "Lleva acumulado 100% del refugio" << endl;
+        }else{
+            cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
+        }
+        return true;
 }
 
-void recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia){
+bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia){
 
-int materiales, materialesRecolectados;
-
+    int materiales, materialesRecolectados;
+    system("cls");
     if(porcRefugio[0] < 100){
         cout<<"Eligio recolectar materiales"<<endl;
         cout<<"1- Ramas de arboles "<<endl;
@@ -70,78 +62,46 @@ int materiales, materialesRecolectados;
                 cout << "Ramas de arboles" << endl;
                 materialesRecolectados=(rand()%15+10);
                 porcRefugio[0] += materialesRecolectados;
-                if(porcRefugio[0] >= 100){
-                    porcRefugio[0] = 100;
-                    if(diasDeArmado[0] == 0){
-                        diasDeArmado[0] = dia;
-                    }
-                }
-                cout << "Ha recolectado " << materialesRecolectados << " de materiales" << endl;
-                if(porcRefugio[0] >= 100){
-                    cout << "Lleva acumulado 100% del refugio" << endl;
-                }else{
-                    cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-                }
-                cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
                 break;
             case 2:
                 cout << "Ramas de arbustos" << endl;
                 materialesRecolectados=(rand()%20+15);
                 porcRefugio[0] += materialesRecolectados;
-                if(porcRefugio[0] >= 100){
-                    porcRefugio[0] = 100;
-                if(diasDeArmado[0] == 0){
-                    diasDeArmado[0] = dia;
-                    }
-                }
-                cout << "Ha recolectado " << materialesRecolectados << " de materiales" << endl;
-                if(porcRefugio[0] >= 100){
-                    cout << "Lleva acumulado 100% del refugio" << endl;
-                }else{
-                    cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-                }
-                cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
                 break;
             case 3:
                 cout << "Barro" << endl;
                 materialesRecolectados=(rand()%30+8);
                 porcRefugio[0] += materialesRecolectados;
-                if(porcRefugio[0] >= 100){
-                    porcRefugio[0] = 100;
-                    if(diasDeArmado[0] == 0){
-                        diasDeArmado[0] = dia;
-                    }
-                }
-                cout << "Ha recolectado " << materialesRecolectados << " de materiales" << endl;
-                if(porcRefugio[0] >= 100){
-                    cout << "Lleva acumulado 100% del refugio" << endl;
-                }else{
-                    cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-                }
-                cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
                 break;
             case 4:
                 cout << "Rocas" << endl;
                 materialesRecolectados=(rand()%35+1);
                 porcRefugio[0] += materialesRecolectados;
-                if(porcRefugio[0] >= 100){
-                    porcRefugio[0] = 100;
-                    if(diasDeArmado[0] == 0){
-                        diasDeArmado[0] = dia;
-                    }
-                }
-                cout << "Ha recolectado " << materialesRecolectados << " de materiales" << endl;
-                if(porcRefugio[0] >= 100){
-                    cout << "Lleva acumulado 100% del refugio" << endl;
-                }else{
-                    cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
-                }
-                cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+                break;
+            default:
+                cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
+                dia -= 1;
+                return false;
                 break;
         }
+        if(porcRefugio[0] >= 100){
+            porcRefugio[0] = 100;
+            if(diasDeArmado[0] == 0){
+                diasDeArmado[0] = dia+1;
+            }
+        }
+        cout << "Ha recolectado " << materialesRecolectados << " de materiales" << endl;
+        if(porcRefugio[0] >= 100){
+            cout << "Lleva acumulado 100% del refugio" << endl;
+        }else{
+            cout << "Lleva acumulado " << porcRefugio[0] << "% del refugio" << endl;
+        }
+        cout << "Lleva acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        return true;
     }else{
         dia -= 1;
         cout << "Te dije que el refugio ya esta 100% completado, vaya a recolectar alimentos" << endl;
+        return false;
     }
 }
 
@@ -157,7 +117,7 @@ void recoleccionBots(const int TAM, int kgAlimentos[], int porcRefugio[], int di
             if(porcRefugio[i] >= 100){
                 porcRefugio[i] = 100;
                 if(diasDeArmado[i] == 0){
-                    diasDeArmado[i] = dia;
+                    diasDeArmado[i] = dia+1;
                 }
             }
         }
@@ -173,7 +133,7 @@ void promedioAlimentos(const int TAM, int kgAlimentos[]){
 
     float prom = float(acum)/TAM;
 
-    cout << endl << "Promedio de kg de alimentos: " << prom << endl;
+    cout << "Promedio de kg de alimentos: " << prom << endl;
     for(int i=0; i<TAM; i++){
         if(kgAlimentos[i] > prom){
             cout << "Jugador " << i+1 << ": " << kgAlimentos[i] << "Kgs" << endl;
@@ -198,9 +158,15 @@ void refugioMasRapido(const int TAM, int diasDeArmado[]){
 
 void refugioMas5Dias(const int TAM, int diasDeArmado[]){
 
+    int cont = 0;
     for(int i=0; i<TAM; i++){
         if(diasDeArmado[i] > 5){
+            cont++;
             cout << "Jugador " << i+1 << " en " << diasDeArmado[i] << " dias" << endl;
         }
+    }
+
+    if(cont == 0){
+        cout << "Ningun jugador completo el refugio en mas de 5 dias" << endl;
     }
 }
