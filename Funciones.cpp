@@ -16,17 +16,17 @@ bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], in
     switch(alimentos){
         case 1:
             cout << "Pesca en el rio" << endl;
-            alimentoRecogido=(rand()%10+0);
+            alimentoRecogido=(rand()%15+0);
             kgAlimentos[0] += alimentoRecogido;
             break;
         case 2:
             cout << "Cosecha en arbusto" << endl;
-            alimentoRecogido=(rand()%5+2);
+            alimentoRecogido=(rand()%10+3);
             kgAlimentos[0] += alimentoRecogido;
             break;
         case 3:
             cout << "Cosecha en arboles" << endl;
-            alimentoRecogido=(rand()%8+3);
+            alimentoRecogido=(rand()%8+5);
             kgAlimentos[0] += alimentoRecogido;
             break;
         default:
@@ -75,7 +75,7 @@ bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], i
                 break;
             case 4:
                 cout << "Rocas" << endl;
-                materialesRecolectados=(rand()%35+1);
+                materialesRecolectados=(rand()%35+5);
                 porcRefugio[0] += materialesRecolectados;
                 break;
             default:
@@ -168,5 +168,86 @@ void refugioMas5Dias(const int TAM, int diasDeArmado[]){
 
     if(cont == 0){
         cout << "Ningun jugador completo el refugio en mas de 5 dias" << endl;
+    }
+}
+
+void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int porcRefugio[], int kgAlimentos[]){
+
+    int nroJugador[TAM];
+    int copiaDiasDeArmado[TAM];
+    int copiaKgAlimentos[TAM];
+
+    for(int i=0; i<TAM; i++) {
+        nroJugador[i] = i;
+        copiaDiasDeArmado[i] = diasDeArmado[i];
+        copiaKgAlimentos[i] = kgAlimentos[i];
+    }
+
+
+    for(int i=0; i<TAM - 1; i++) {
+        for(int j = 0; j < TAM - i - 1; j++) {
+
+            bool cambiar = false;
+            bool actualValido = (copiaDiasDeArmado[j] != 0 && copiaKgAlimentos[j] >= 14);
+            bool siguienteValido = (copiaDiasDeArmado[j + 1] != 0 && copiaKgAlimentos[j + 1] >= 14);
+
+            // 1- Válidos primero siempre
+            if(!actualValido && siguienteValido){
+                cambiar = true;
+            }else if(actualValido && !siguienteValido){
+                cambiar = false;
+            }else if(actualValido && siguienteValido){
+                //2- Ambos válidos entonces ordena por días (ascendente), luego por kg (descendente)
+                if(copiaDiasDeArmado[j] > copiaDiasDeArmado[j + 1]){
+                    cambiar = true;
+                }
+                else if(copiaDiasDeArmado[j] == copiaDiasDeArmado[j + 1] &&
+                         copiaKgAlimentos[j] < copiaKgAlimentos[j + 1]){
+                    cambiar = true;
+                }
+            }else{
+                // 3- Ambos inválidos entonces ordena por días (0 cuenta como el peor)
+                if (copiaDiasDeArmado[j] == 0 && copiaDiasDeArmado[j + 1] != 0) {
+                    // el actual tiene 0 entonces va a la derecha
+                    cambiar = true;
+                } else if (copiaDiasDeArmado[j] != 0 && copiaDiasDeArmado[j + 1] == 0) {
+                    // el siguiente tiene 0 entonces no cambia
+                    cambiar = false;
+                } else {
+                    // ambos distintos de 0 entonces comparar igual que los validos.
+                    if (copiaDiasDeArmado[j] > copiaDiasDeArmado[j + 1])
+                        cambiar = true;
+                    else if (copiaDiasDeArmado[j] == copiaDiasDeArmado[j + 1] &&
+                             copiaKgAlimentos[j] < copiaKgAlimentos[j + 1])
+                        cambiar = true;
+                }
+            }
+
+            if (cambiar){
+                int tempDias = copiaDiasDeArmado[j];
+                copiaDiasDeArmado[j] = copiaDiasDeArmado[j + 1];
+                copiaDiasDeArmado[j + 1] = tempDias;
+
+                int tempKg = copiaKgAlimentos[j];
+                copiaKgAlimentos[j] = copiaKgAlimentos[j + 1];
+                copiaKgAlimentos[j + 1] = tempKg;
+
+                int tempNro = nroJugador[j];
+                nroJugador[j] = nroJugador[j + 1];
+                nroJugador[j + 1] = tempNro;
+            }
+        }
+    }
+
+    cout << "Puesto\t\tJugador\t\tDias de armado\t\tKgs de alimento\n";
+    cout << "------------------------------------------------------------------------\n";
+
+    int puesto = 1;
+    for(int i=0; i<TAM; i++){
+        if (copiaDiasDeArmado[i] == 0 || copiaKgAlimentos[i] < 14) {
+            cout << "eliminado\t" << nroJugador[i]+1 << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << endl;
+        } else {
+            cout << puesto++ << "\t\t" << nroJugador[i]+1 << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << endl;;
+        }
     }
 }

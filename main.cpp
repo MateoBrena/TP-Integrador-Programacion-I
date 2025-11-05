@@ -89,7 +89,7 @@ int main(){
             for(int i=0; i<TAM; i++){
                 cout << "Refugio de jugador " << i+1 << " armado en: " << diasDeArmado[i] << " dias" << endl;
             }
-
+            bool jugadorVivo = (diasDeArmado[0] != 0 && kgAlimentos[0] >= 14);
             system("pause");
             system("cls");
             int opcionStats;
@@ -117,21 +117,32 @@ int main(){
                         refugioMas5Dias(TAM, diasDeArmado);
                         break;
                     case 4:
-                        cout << "Proximamente..." << endl;
+                        tablaPosicionesEtapa1(TAM, diasDeArmado, porcRefugio, kgAlimentos);
                         break;
                     case 5:
-                        cout << "Etapa 2" << endl;
+                        if(jugadorVivo){
+                            cout << "Etapa 2." << endl;
+                            break;
+                        }else{
+                            cout << "Jugador elimiinado. No puede avanzar a la segunda etapa." << endl;
+                            break;
+                        }
                         break;
                     case 0:
                         break;
+                    default:
+                        cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
                 }
                 system("pause");
                 system("cls");
-                cout << "============================================" << endl;
-                cout << "          ESTADISTICAS ETAPA 1              " << endl;
-                cout << "============================================" << endl;
+                if(opcionStats == 5 && jugadorVivo){
+                    break;
+                }
+                cout << "===========================================================================" << endl;
+                cout << "                           ESTADISTICAS ETAPA 1                            " << endl;
+                cout << "===========================================================================" << endl;
                 cout << "1- Participantes que superaron el promedio de kg de alimentos recolectados" << endl;
-                cout << "2- Paricipante mas rapido en construir su refugio" << endl;
+                cout << "2- Participante mas rapido en construir su refugio" << endl;
                 cout << "3- Participantes que tardaron mas de 5 dias en constuir su refugio" << endl;
                 cout << "4- Tabla de posiciones" << endl;
                 cout << "5- Continuar a la segunda etapa" << endl;
@@ -144,7 +155,7 @@ int main(){
         }
     }
 
-    cout << endl << "Ha salido del juego" << endl;
+    cout << endl << "Juego terminado. Gracias por jugar" << endl;
 
     return 0;
 }
