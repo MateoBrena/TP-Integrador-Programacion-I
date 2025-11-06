@@ -7,5 +7,10 @@ void promedioAlimentos(const int TAM, int kgAlimentos[]);
 void refugioMasRapido(const int TAM, int diasDeArmado[]);
 void refugioMas5Dias(const int TAM, int diasDeArmado[]);
 void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int porcRefugio[], int kgAlimentos[]);
+void chequearVivos(const int TAM, int kgAlimentos[], int diasDeRefugio[], int jugadoresVivos[]);
+bool recolectarMaterialesBalsa(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia);
+void promedioAlimentosEtapa2(const int TAM, int kgAlimentos[], int jugadoresVivos[]);
+void refugioMasRapidoEtapa2(const int TAM, int diasDeArmado[], int jugadoresVivos[]);
+void tablaPosicionesEtapa2(const int TAM, int diasDeArmado[], int porcRefugio[], int kgAlimentos[], int jugadoresVivos[]);
 #endif // FUNCIONES_H_INCLUDED
 
