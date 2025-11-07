@@ -11,9 +11,10 @@ int main(){
     const int TAM=8;
     int eleccion;
     int dia;
-    int kgAlimentos[TAM]={0};
-    int porcRefugio[TAM]={0};
-    int diasDeArmado[TAM]={0};
+    int kgAlimentos[TAM]={};
+    int porcRefugio[TAM]={};
+    int diasDeArmado[TAM]={};
+    int jugadoresVivos[TAM] = {1,1,1,1,1,1,1,1};
     int opcionStats;
 
     cout<< R"(
@@ -65,12 +66,12 @@ int main(){
                 if(eleccion == 1){
                     bool turnoAlimentosValido = recolectarAlimentos(TAM, kgAlimentos, porcRefugio, dia);
                     if(turnoAlimentosValido){
-                        recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
+                        recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                     }
                 }else if(eleccion == 2){
                     bool turnoMaterialesValido = recolectarMateriales(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
                     if(turnoMaterialesValido){
-                        recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
+                        recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                     }
                 }else{
                     dia -= 1;
@@ -155,7 +156,6 @@ int main(){
             }
 
             if(opcionStats == 5 && jugadorVivo){
-                int jugadoresVivos[TAM] = {0};
 
                 chequearVivos(TAM, kgAlimentos, diasDeArmado, jugadoresVivos);
 
@@ -168,7 +168,8 @@ int main(){
                     diasDeArmado[i] = 0;
                     porcRefugio[i] = 0;
                 }
-                cout << "Etapa 2. Tienes 6 dias para recolectar alimentos y materiales para su balsa de escape" << endl << endl;
+                cout << "Etapa 2. Tienes 6 dias para recolectar alimentos y materiales para tu balsa de escape" << endl << endl;
+                porcRefugio[0] = 50;
                 for (dia=0; dia<6; dia++){
                     cout << "Dia " << dia+1 << endl;
                     if(porcRefugio[0] < 100){
@@ -183,12 +184,12 @@ int main(){
                     if(eleccion == 1){
                         bool turnoAlimentosValido = recolectarAlimentos(TAM, kgAlimentos, porcRefugio, dia);
                         if(turnoAlimentosValido){
-                            recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
+                            recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                         }
                     }else if(eleccion == 2){
                         bool turnoMaterialesValido = recolectarMaterialesBalsa(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
                         if(turnoMaterialesValido){
-                            recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
+                            recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                         }
                     }else{
                         dia -= 1;
@@ -272,6 +273,54 @@ int main(){
                 }
                 if(opcionStats == 0){
                     break;
+                }
+                if(opcionStats == 4 && jugadorVivo){
+                    cout << "Binvenido a la etapa 3" << endl;
+                    int cantVivos = chequearVivos(TAM, kgAlimentos, diasDeArmado, jugadoresVivos);
+                    int horasDeLlegada[cantVivos] = {};
+                    eleccionFinal(eleccion, horasDeLlegada);
+                    eleccionFinalBots(cantVivos, horasDeLlegada, jugadoresVivos);
+                    system("pause");
+                    system("cls");
+                    cout << "TABLA DE DIAS DE LLEGADA:" << endl;
+                    for(int i=0; i<cantVivos; i++){
+                        if(jugadoresVivos[i] == 1){
+                            cout << "Horas de jugador " << i+1 << ": " << horasDeLlegada[i] << "hs" << endl;
+                        }
+                    }
+                    system("pause");
+                    system("cls");
+                    int opcionStats;
+                    cout << "===========================================================================" << endl;
+                    cout << "                           ESTADISTICAS ETAPA 3                            " << endl;
+                    cout << "===========================================================================" << endl;
+                    cout << "1- Participante mas rapido en llegar al destino" << endl;
+                    cout << "2- Tabla de posiciones" << endl;
+                    cout << "0- Salir" << endl;
+                    cin >> opcionStats;
+
+                    while(opcionStats != 0){
+                        system("cls");
+                        if(opcionStats == 1){
+                            masRapidoEtapa3(cantVivos, horasDeLlegada, jugadoresVivos);
+                        }else if(opcionStats == 2){
+                            tablaPosicionesEtapa3(cantVivos, horasDeLlegada);
+                        }else{
+                            break;
+                        }
+                        system("pause");
+                        system("cls");
+                        cout << "===========================================================================" << endl;
+                        cout << "                           ESTADISTICAS ETAPA 3                            " << endl;
+                        cout << "===========================================================================" << endl;
+                        cout << "1- Participante mas rapido en llegar al destino" << endl;
+                        cout << "2- Tabla de posiciones" << endl;
+                        cout << "0- Salir" << endl;
+                        cin >> opcionStats;
+                    }
+                    if(opcionStats == 0){
+                        break;
+                    }
                 }
             }
             if(opcionStats == 0){

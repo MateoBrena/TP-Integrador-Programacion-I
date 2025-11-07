@@ -105,19 +105,22 @@ bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], i
     }
 }
 
-void recoleccionBots(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia){
+void recoleccionBots(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int jugadoresVivos[], int &dia){
 
     for(int i=1; i<TAM; i++){
-        int eleccion = (rand()%2+1);
 
-        if(eleccion == 1){
-            kgAlimentos[i] += (rand()%10+3);
-        }else{
-            porcRefugio[i] += (rand()%40+10);
-            if(porcRefugio[i] >= 100){
-                porcRefugio[i] = 100;
-                if(diasDeArmado[i] == 0){
-                    diasDeArmado[i] = dia+1;
+        if(jugadoresVivos[i] == 1){
+            int eleccion = (rand()%2+1);
+
+            if(eleccion == 1){
+                kgAlimentos[i] += (rand()%10+3);
+            }else{
+                porcRefugio[i] += (rand()%40+10);
+                if(porcRefugio[i] >= 100){
+                    porcRefugio[i] = 100;
+                    if(diasDeArmado[i] == 0){
+                        diasDeArmado[i] = dia+1;
+                    }
                 }
             }
         }
@@ -224,9 +227,9 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int porcRefugio[],
             }
 
             if (cambiar){
-                int tempDias = copiaDiasDeArmado[j];
+                int auxDias = copiaDiasDeArmado[j];
                 copiaDiasDeArmado[j] = copiaDiasDeArmado[j + 1];
-                copiaDiasDeArmado[j + 1] = tempDias;
+                copiaDiasDeArmado[j + 1] = auxDias;
 
                 int tempKg = copiaKgAlimentos[j];
                 copiaKgAlimentos[j] = copiaKgAlimentos[j + 1];
@@ -252,16 +255,21 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int porcRefugio[],
     }
 }
 
-void chequearVivos(const int TAM, int kgAlimentos[], int diasDeRefugio[], int jugadoresVivos[]) {
+int chequearVivos(const int TAM, int kgAlimentos[], int diasDeRefugio[], int jugadoresVivos[]){
+
+    int vivos = 0;
 
     for (int i = 0; i < TAM; i++) {
 
         if(kgAlimentos[i] >= 14 && diasDeRefugio[i] != 0){
             jugadoresVivos[i] = 1;
+            vivos++;
         }else{
             jugadoresVivos[i] = 0;
         }
     }
+
+    return vivos;
 }
 
 bool recolectarMaterialesBalsa(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia){
@@ -449,6 +457,108 @@ void tablaPosicionesEtapa2(const int TAM, int diasDeArmado[], int porcRefugio[],
             cout << "eliminado\t" << nroJugador[i]+1 << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << endl;
         } else {
             cout << puesto++ << "\t\t" << nroJugador[i]+1 << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << endl;;
+        }
+    }
+}
+
+void eleccionFinal(int eleccion, int horasDeLlegada[]){
+
+    cout << "Etapa 3. Elija una direccion de escape: " << endl << endl;
+    cout << "1- Norte" << endl;
+    cout << "2- Sur" << endl;
+    cout << "3- Este" << endl;
+    cout << "4- Oeste" << endl;
+    cin >> eleccion;
+
+    switch(eleccion){
+        case 1:
+            cout << "Norte" << endl;
+            horasDeLlegada[0] = (rand()%2+10);
+            cout << "Has tardado " << horasDeLlegada[0] << " horas en llegar al destino" << endl;
+            cout << "Texto Sobrevivio" << endl;
+        break;
+        case 2:
+            cout << "Sur" << endl;
+            horasDeLlegada[0] = (rand()%2+16);
+            cout << "Has tardado " << horasDeLlegada[0] << " horas en llegar al destino" << endl;
+            cout << "Texto Sobrevivio" << endl;
+        break;
+        case 3:
+            cout << "Este" << endl;
+            horasDeLlegada[0] = (rand()%3+25);
+            cout << "Has tardado " << horasDeLlegada[0] << "horas" <<endl;
+            cout << "Texto Murio" << endl;
+        break;
+        case 4:
+            cout << "Oeste" << endl;
+            horasDeLlegada[0] = (rand()%3+25);
+            cout << "Has tardado " << horasDeLlegada[0] << " horas" << endl;
+            cout << "Texto Murio" << endl;
+        break;
+        default:
+            cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
+        break;
+
+    }
+
+}
+
+void eleccionFinalBots(int vivos, int horasDeLlegada[], int jugadoresVivos[]){
+
+    for(int i=1; i<vivos; i++){
+        if(jugadoresVivos[i] == 1){
+            horasDeLlegada[i]=(rand()%30+1);
+        }
+    }
+}
+
+void masRapidoEtapa3(int vivos, int horasDeLlegada[], int jugadoresVivos[]){
+
+    int menor = 30;
+    int pos;
+    for(int i=0; i<vivos; i++){
+        if(horasDeLlegada[i] < menor && jugadoresVivos[i] != 0){
+            menor = horasDeLlegada[i];
+            pos = i;
+        }
+    }
+
+    cout << "Jugador " << pos+1 << " en " << menor << " horas" << endl;
+
+}
+
+void tablaPosicionesEtapa3(int vivos, int horasDeLlegada[]){
+    int i, j;
+    int nroJugador[vivos];
+
+    for(int i=0; i<vivos; i++){
+        nroJugador[i] = i;
+    }
+
+    for (i = 0; i < vivos - 1; i++) {
+        for (j = 0; j < vivos - i - 1; j++) {
+            if (horasDeLlegada[j] > horasDeLlegada[j + 1]) {
+
+                int temp = horasDeLlegada[j];
+                horasDeLlegada[j] = horasDeLlegada[j + 1];
+                horasDeLlegada[j + 1] = temp;
+
+                int tempNro = nroJugador[j];
+                nroJugador[j] = nroJugador[j + 1];
+                nroJugador[j + 1] = tempNro;
+            }
+        }
+    }
+
+    cout << "Puesto\t\tJugador\t\tHoras de llegada\n";
+    cout << "------------------------------------------------------------------------\n";
+
+    int puesto = 1;
+    for(int i=0; i<vivos; i++){
+        if (horasDeLlegada[i] > 24){
+            cout << "eliminado\t" << nroJugador[i]+1 << "\t\t\t" << horasDeLlegada[i] << endl;
+        } else {
+            cout << puesto++ << "\t\t" << nroJugador[i]+1 << "\t\t\t" << horasDeLlegada[i] << endl;;
         }
     }
 }
