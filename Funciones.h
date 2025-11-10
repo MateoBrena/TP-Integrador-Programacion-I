@@ -22,6 +22,7 @@ void eleccionFinalBots(const int TAM, int horasDeLlegada[], int jugadoresVivos[]
 void masRapidoEtapa3(const int TAM, int horasDeLlegada[], int jugadoresVivos[], string nombres[]);
 void tablaPosicionesEtapa3(const int TAM, int horasDeLlegada[], int jugadoresVivos[], string nombres[], int edades[]);
 void reiniciarJuego(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int jugadoresVivos[], int &dia);
+void rangoEtario(const int TAM, int edades[], string nombres[]);
 int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int jugadoresVivos[], int horasDeLlegada[], int porcRefugio[], string nombres[], int edades[],int &dia, bool jugadorVivo);
 #endif // FUNCIONES_H_INCLUDED
 

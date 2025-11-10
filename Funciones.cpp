@@ -6,21 +6,23 @@ using namespace std;
 
 void nombreYEdad(const int TAM, string nombres[], int edades[]){
 
-    cout << "Ingrese su nombre: (Un solo nombre, sin espacios): ";
-    cin >> nombres[0];
+    cout << "Ingrese su nombre: ";
+    cin.ignore(); // limpia el buffer para permitir ingreso con espacios, aunque nombres mayores a 7 caracteres rompen visualmente las tablas.
+    getline(cin, nombres[0]);
+
     cout << "Ingrese su edad: ";
     cin >> edades[0];
 
-    string nombresDisponibles[7] = {"Ana", "Luis", "Carlos", "Maria", "Juan", "Pedro", "Lucia"};
-    bool usado[7] = {false};
+    string nombresDisponibles[TAM-1] = {"Ana", "Luis", "Carlos", "Maria", "Juan", "Pedro", "Lucia"};
+    bool usado[TAM-1] = {false};
 
     for(int i=1; i<TAM; i++){
         int indice;
         do{
-            indice = rand()%7;
+            indice = (rand()%7);
         }while(usado[indice]);
 
-        int edad = (rand()%70+18);
+        int edad = (rand()%71+18);
         edades[i] = edad;
         nombres[i] = nombresDisponibles[indice];
         usado[indice] = true;
@@ -28,6 +30,7 @@ void nombreYEdad(const int TAM, string nombres[], int edades[]){
 }
 
 bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], int &dia){
+
     int alimentos, alimentoRecogido;
     system("cls");
     cout<<"Haz elegido recolectar alimentos"<<endl << endl;
@@ -219,7 +222,7 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int kgAlimentos[],
 
 
     for(int i=0; i<TAM - 1; i++){
-        for(int j = 0; j < TAM - i - 1; j++){
+        for(int j=0; j < TAM - i - 1; j++){
 
             bool cambiar = false;
             bool actualValido = (copiaDiasDeArmado[j] != 0 && copiaKgAlimentos[j] >= 14);
@@ -270,7 +273,7 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int kgAlimentos[],
                 copiaNombres[j] = copiaNombres[j + 1];
                 copiaNombres[j + 1] = tempNombre;
 
-                int tempEdad = copiaEdades[i];
+                int tempEdad = copiaEdades[j];
                 copiaEdades[j] = copiaEdades[j + 1];
                 copiaEdades[j + 1] = tempEdad;
             }
@@ -325,7 +328,7 @@ int estadisticasEtapa1(const int TAM, int kgAlimentos[], int diasDeArmado[], str
                     return opcionStats;
                     break;
                 }else{
-                    cout << "Jugador elimiinado. No puede avanzar a la segunda etapa." << endl;
+                    cout << "Jugador eliminado. No puede avanzar a la segunda etapa." << endl;
                     break;
                 }
             case 0:
@@ -479,7 +482,7 @@ void tablaPosicionesEtapa2(const int TAM, int diasDeArmado[], int kgAlimentos[],
 
 
     for(int i=0; i<TAM - 1; i++){
-        for(int j = 0; j < TAM - i - 1; j++){
+        for(int j=0; j < TAM - i - 1; j++){
 
             bool cambiar = false;
             bool actualValido = (copiaDiasDeArmado[j] != 0 && copiaKgAlimentos[j] >= 14);
@@ -588,7 +591,7 @@ int estadisticasEtapa2(const int TAM, int kgAlimentos[], int diasDeArmado[], int
                     return opcionStats;
                     break;
                 }else{
-                    cout << "Jugador elimiinado. No puede avanzar a la tercera etapa." << endl;
+                    cout << "Jugador eliminado. No puede avanzar a la tercera etapa." << endl;
                     break;
                 }
             case 0:
@@ -618,6 +621,49 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
 
     bool opcionValida = false;
 
+    // Textos de los 4 posibles finales
+    string textos[4] = {
+        // Gana 1
+        "El camino elegido fue tranquilo y sin obstaculos. La corriente te ha guiado suavemente\n"
+        "entre los arboles hasta salir de la selva. Luego de unas pocas horas, la corriente se termina\n"
+        "en una amplia y tranquila laguna. Por fin, luego de varios dias en la selva, llegaste a un lugar seguro.",
+
+        // Gana 2
+        "El camino elegido estaba obstruido por ramas de arboles caidos, decidiste seguir por un arroyo\n"
+        "a tu derecha. Afortunadamente el arroyo estaba despejado, tomaste velocidad y lograste llegar\n"
+        "en un excelente tiempo.",
+
+        // Pierde 1
+        "Mientras avanzabas lentamente por el rio, varios cocodrilos emergieron del agua, dificultando el paso.\n"
+        "Uno de los cocodrilos ataca tu balsa, provocando una rotura que te obliga a ir a la orilla.\n"
+        "Tu balsa ha quedado destruida. Debiste continuar a pie. Se aproxima la noche y ya no tienes alimentos.",
+
+        // Pierde 2
+        "La corriente es extremadamente fuerte, avanzas muy rapido. El rio comienza a volverse tortuoso y la balsa\n"
+        "es cada vez mas dificil de controlar.La corriente te embiste con una roca y la balsa se llena de agua rapidamente.\n"
+        "Lograste llegar a la orilla, pero tu transporte es inutilizable. Tomas tu alimento y continuas a pie."
+    };
+
+    // Resultado asociado a cada texto: 1 = gana, 0 = pierde
+    int resultado[4] = {1, 1, 0, 0};
+
+    // Mezclamos textos y resultados ya que hay dos textos ganadores y dos perdedores, no se pueden mezclar.
+    for(int i=0; i<10; i++){
+        int a = rand()%4;
+        int b = rand()%4;
+        // intercambio de textos
+        string tempTexto = textos[a];
+        textos[a] = textos[b];
+        textos[b] = tempTexto;
+        // intercambio de resultados
+        int tempRes = resultado[a];
+        resultado[a] = resultado[b];
+        resultado[b] = tempRes;
+    }
+
+
+    string direcciones[4] = {"Norte", "Sur", "Este", "Oeste"};
+
     do {
         system("cls");
         cout << "Etapa 3." << endl;
@@ -628,54 +674,36 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
         cout << "4- Oeste" << endl;
         cin >> eleccion;
 
-        switch(eleccion) {
-            case 1:
-                system("cls");
-                cout << "Haz elegido el camino Norte." << endl << endl;
-                horasDeLlegada[0] = (rand() % 12 + 4);
-                cout << "Haz tardado " << horasDeLlegada[0] << " horas en llegar al destino." << endl << endl;
-                cout << "Texto Sobrevivio" << endl;
-                opcionValida = true;
-            break;
-
-            case 2:
-                system("cls");
-                cout << "Haz elegido el camino Sur." << endl << endl;
-                horasDeLlegada[0] = (rand() % 16 + 4);
-                cout << "Haz tardado " << horasDeLlegada[0] << " horas en llegar al destino." << endl;
-                cout << "El camino elegido estaba obstruido por ramas de arboles" << endl;
-                cout << "caidos en el primer tramo, pero luego, gracias a la corriente a favor," << endl;
-                cout << "tomaste velocidad y lograste llegar en un excelente tiempo." << endl << endl;
-                opcionValida = true;
-            break;
-
-            case 3:
-                system("cls");
-                cout << "Haz elegido el camino Este." << endl << endl;
-                horasDeLlegada[0] = (rand() % 3 + 25);
-                cout << "Haz tardado " << horasDeLlegada[0] << " horas." << endl;
-                cout << "Texto Murio" << endl;
-                opcionValida = true;
-            break;
-
-            case 4:
-                system("cls");
-                cout << "Haz elegido el camino Oeste." << endl << endl;
-                horasDeLlegada[0] = (rand() % 3 + 25);
-                cout << "Haz tardado " << horasDeLlegada[0] << " horas." << endl;
-                cout << "Texto Murio" << endl;
-                opcionValida = true;
-            break;
-
-            default:
-                system("cls");
-                cout << "No ha elegido una opcion valida. Vuelva a seleccionar." << endl;
-                system("pause");
-            break;
+        if (eleccion < 1 || eleccion > 4) {
+            system("cls");
+            cout << "No ha elegido una opcion valida. Vuelva a seleccionar." << endl;
+            system("pause");
+            continue;
         }
 
-    }while(!opcionValida);
+        system("cls");
+        int indiceEleccion = eleccion - 1;
 
+        cout << "Has elegido el camino " << direcciones[indiceEleccion] << "." << endl << endl;
+        cout << textos[indiceEleccion] << endl << endl;
+
+        if (resultado[indiceEleccion] == 1) {
+            horasDeLlegada[0] = (rand()%12+4);
+            cout << "Has tardado " << horasDeLlegada[0] << " horas..." << endl;
+            cout << "Felicidades! Has logrado escapar" << endl << endl;
+        } else {
+            horasDeLlegada[0] = (rand()%4+24);
+            cout << "Has tardado " << horasDeLlegada[0] << " horas..." << endl;
+            cout << "Lamentablemente, no haz llegado a tiempo." << endl << endl;
+        }
+
+        opcionValida = true;
+
+    } while (!opcionValida);
+
+    if(horasDeLlegada[0] > 24){
+        horasDeLlegada[0] = 0;
+    }
 }
 
 void eleccionFinalBots(const int TAM, int horasDeLlegada[], int jugadoresVivos[]){
@@ -693,17 +721,23 @@ void eleccionFinalBots(const int TAM, int horasDeLlegada[], int jugadoresVivos[]
 void masRapidoEtapa3(const int TAM, int horasDeLlegada[], int jugadoresVivos[], string nombres[]){
 
     int pos;
-    int menor = 35;
+    int menor = 25;
+    int cant = 0;
 
     for(int i=0; i<TAM; i++){
 
         if((horasDeLlegada[i] < menor && horasDeLlegada[i] != 0) && jugadoresVivos[i] != 0){
             menor = horasDeLlegada[i];
             pos = i;
+            cant++;
         }
     }
 
-    cout << nombres[pos] << " en " << menor << " horas" << endl;
+    if(cant != 0){
+        cout << nombres[pos] << " en " << menor << " horas" << endl;
+    }else{
+        cout << "Ningun jugador ha llegado al final." << endl;
+    }
 
 }
 
@@ -762,7 +796,7 @@ void tablaPosicionesEtapa3(const int TAM, int horasDeLlegada[], int jugadoresViv
     for(int i=0; i<TAM; i++){
         if(copiaJugadoresVivos[i]){
             if(copiaHoras[i] == 0){
-                cout << "eliminado\t" << copiaNombres[i] << "\t\t" << copiaHoras[i] << "\t\t" << copiaEdades[i] << endl;
+                cout << "no ha llegado\t" << copiaNombres[i] << "\t\t" << copiaHoras[i] << "\t\t" << copiaEdades[i] << endl;
             }else{
                 if(copiaHoras[i] == copiaHoras[i+1]){
                     cout << puesto << "\t\t" << copiaNombres[i] << "\t\t" << copiaHoras[i] << "\t\t" << copiaEdades[i] << endl;
@@ -786,6 +820,32 @@ void reiniciarJuego(const int TAM, int kgAlimentos[], int porcRefugio[], int dia
     dia = 0;
 }
 
+void rangoEtario(const int TAM, int edades[], string nombres[]){
+
+    int menor = 100;
+    int mayor = 0;
+    string nombreMayor;
+    string nombreMenor;
+
+    for (int i=0; i<TAM; i++) {
+        if(edades[i] < menor){
+            menor = edades[i];
+            nombreMenor = nombres[i];
+        }
+        if(edades[i] > mayor){
+            mayor = edades[i];
+            nombreMayor = nombres[i];
+        }
+    }
+
+    int rango = mayor - menor;
+
+    cout << "Rango etario de los participantes: " << rango << " anios" <<endl;
+    cout << "Participante mayor: " << nombreMayor << " " << mayor << " anios" << endl;
+    cout << "Participante mas joven: " << nombreMenor << " " << menor << " anios" << endl << endl;
+
+}
+
 int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int jugadoresVivos[], int horasDeLlegada[], int porcRefugio[], string nombres[], int edades[],int &dia, bool jugadorVivo){
 
     int opcionStats;
@@ -794,7 +854,8 @@ int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int
     cout << "===========================================================================" << endl;
     cout << "1- Participante mas rapido en llegar al destino" << endl;
     cout << "2- Tabla de posiciones" << endl;
-    cout << "3- Volver a jugar" << endl;
+    cout << "3- Rango etario de participantes" << endl;
+    cout << "4- Volver a jugar" << endl;
     cout << "0- Salir" << endl;
     cin >> opcionStats;
 
@@ -808,6 +869,9 @@ int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int
                 tablaPosicionesEtapa3(TAM, horasDeLlegada, jugadoresVivos, nombres, edades);
                 break;
             case 3:
+                rangoEtario(TAM, edades, nombres);
+                break;
+            case 4:
                 reiniciarJuego(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                 return opcionStats;
                 break;
@@ -827,7 +891,8 @@ int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int
         cout << "===========================================================================" << endl;
         cout << "1- Participante mas rapido en llegar al destino" << endl;
         cout << "2- Tabla de posiciones" << endl;
-        cout << "3- Volver a jugar" << endl;
+        cout << "3- Rango etario de participantes" << endl;
+        cout << "4- Volver a jugar" << endl;
         cout << "0- Salir" << endl;
         cin >> opcionStats;
     }

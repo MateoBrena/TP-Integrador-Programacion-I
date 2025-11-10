@@ -12,7 +12,7 @@ int main(){
     int eleccion;
     int dia;
     string nombres[TAM];
-    int edades[TAM];
+    int edades[TAM]={};
     int kgAlimentos[TAM]={};
     int porcRefugio[TAM]={};
     int diasDeArmado[TAM]={};
@@ -194,6 +194,10 @@ int main(){
                 }
             }
         }
+    }
+
+    if(opcion == 0){
+        cout << endl << "Juego terminado. Gracias por jugar" << endl;
     }
 
     return 0;
