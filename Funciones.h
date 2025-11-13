@@ -2,6 +2,8 @@
 #define FUNCIONES_H_INCLUDED
 #include <string>
 using namespace std;
+
+void mostrarSeleccionado(string texto, int posX, int posY, bool seleccionado);
 void nombreYEdad(const int TAM, string nombres[], int edades[]);
 bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], int &dia);
 bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia);
@@ -24,5 +26,6 @@ void tablaPosicionesEtapa3(const int TAM, int horasDeLlegada[], int jugadoresViv
 void reiniciarJuego(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int jugadoresVivos[], int &dia);
 void rangoEtario(const int TAM, int edades[], string nombres[]);
 int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int jugadoresVivos[], int horasDeLlegada[], int porcRefugio[], string nombres[], int edades[],int &dia, bool jugadorVivo);
+
 #endif // FUNCIONES_H_INCLUDED
 

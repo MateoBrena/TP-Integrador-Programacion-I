@@ -1,15 +1,31 @@
 # depslib dependency file v1.0
-1762803573 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.cpp
+1763001595 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.cpp
 	<iostream>
 	<time.h>
 	<string>
+	"rlutil.h"
 
-1762802061 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\main.cpp
+1763001411 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\main.cpp
 	<iostream>
 	<time.h>
 	<string>
+	"rlutil.h"
 	"Funciones.h"
 
-1762801376 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.h
+1762985269 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.h
 	<string>
+
+1762960671 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
 

@@ -1,13 +1,31 @@
 #include <iostream>
 #include <time.h>
 #include <string>
+#include "rlutil.h"
 
 using namespace std;
+
+void mostrarSeleccionado(string texto, int posX, int posY, bool seleccionado){
+
+    if(seleccionado){
+        rlutil::setBackgroundColor(rlutil::WHITE);
+        rlutil::setColor(rlutil::BLACK);
+        rlutil::locate(posX-2, posY);
+        cout << (char)175 << "  " << texto << "  " << (char)174 << endl;
+    }else{
+        rlutil::setBackgroundColor(rlutil::BLACK);
+        rlutil::setColor(rlutil::GREY);
+        rlutil::locate(posX-2, posY);
+        cout << "   " << texto << "   " << endl;
+    }
+
+    rlutil::setBackgroundColor(rlutil::BLACK);
+    rlutil::setColor(rlutil::GREY);
+}
 
 void nombreYEdad(const int TAM, string nombres[], int edades[]){
 
     cout << "Ingrese su nombre: ";
-    cin.ignore(); // limpia el buffer para permitir ingreso con espacios, aunque nombres mayores a 7 caracteres rompen visualmente las tablas.
     getline(cin, nombres[0]);
 
     cout << "Ingrese su edad: ";
@@ -27,106 +45,191 @@ void nombreYEdad(const int TAM, string nombres[], int edades[]){
         nombres[i] = nombresDisponibles[indice];
         usado[indice] = true;
     }
+
+    for(int i=0; i<TAM; i++){
+        cout << nombres[i] << " " << edades[i] << endl;
+    }
 }
 
 bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], int &dia){
 
-    int alimentos, alimentoRecogido;
     system("cls");
-    cout<<"Haz elegido recolectar alimentos"<<endl << endl;
-    cout<<"1- Pesca en el rio "<<endl;
-    cout<<"2- Cosecha en arbustos"<<endl;
-    cout<<"3- Cosecha en arboles"<<endl;
-    cin>>alimentos;
+    int alimentoRecogido;
+    int y = 0;
+    int eleccion = 1;
 
-    switch(alimentos){
-        case 1:
-            cout << "Haz elegido pesca en el rio" << endl << endl;
-            alimentoRecogido=(rand()%15+0);
-            kgAlimentos[0] += alimentoRecogido;
-            break;
-        case 2:
-            cout << "Haz elegido cosecha en arbusto" << endl << endl;
-            alimentoRecogido=(rand()%10+3);
-            kgAlimentos[0] += alimentoRecogido;
-            break;
-        case 3:
-            cout << "Haz elegido cosecha en arboles" << endl<< endl;
-            alimentoRecogido=(rand()%8+5);
-            kgAlimentos[0] += alimentoRecogido;
-            break;
-        default:
-            cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
-            dia -= 1;
-            return false;
-            break;
+    do{
+        rlutil::locate(1,1);
+        cout<<"Haz elegido recolectar alimentos"<<endl;
+        rlutil::locate(1,3);
+        cout << "Elige donde recolectar alimentos: " << endl;
+        mostrarSeleccionado("Pesca en el rio", 3, 5, y==0);
+        mostrarSeleccionado("Cosecha en arbustos", 3, 6, y==1);
+        mostrarSeleccionado("Caza con lanza", 3, 7, y==2);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(3,5+y);
+                y--;
+                if(y<0){
+                    y = 0;
+                }
+                break;
+            case 115: // abajo
+                rlutil::locate(3,5+y);
+                y++;
+                if(y>2){
+                    y = 2;
+                }
+                break;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            rlutil::locate(1,9);
+                            cout << "Haz elegido pesca en el rio" << endl << endl;
+                            alimentoRecogido=(rand()%15+0);
+                            kgAlimentos[0] += alimentoRecogido;
+                            eleccion = 0;
+                            break;
+                        case 1:
+                            rlutil::locate(1,9);
+                            cout << "Haz elegido cosecha en arbusto" << endl << endl;
+                            alimentoRecogido=(rand()%10+3);
+                            kgAlimentos[0] += alimentoRecogido;
+                            eleccion = 0;
+                            break;
+                        case 2:
+                            rlutil::locate(1,9);
+                            cout << "Haz elegido caza con lanza" << endl<< endl;
+                            alimentoRecogido=(rand()%8+5);
+                            kgAlimentos[0] += alimentoRecogido;
+                            eleccion = 0;
+                            break;
+                        }
+                break;
         }
-        cout << "Haz recolectado " << alimentoRecogido << " kg de alimentos" << endl << endl;
+    }while(eleccion != 0);
+
+    rlutil::locate(1,11);
+    cout << "Haz recolectado " << alimentoRecogido << " kg de alimentos" << endl;
+    rlutil::locate(1,13);
+    if(kgAlimentos[0] >= 14){
+        rlutil::setColor(rlutil::GREEN);
         cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
-        if(porcRefugio[0] >= 100){
-            cout << "Llevas acumulado 100% del refugio" << endl;
-        }else{
-            cout << "Llevas acumulado " << porcRefugio[0] << "% del refugio" << endl;
-        }
-        return true;
+    }else{
+        rlutil::setColor(rlutil::RED);
+        cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+    }
+    rlutil::locate(1,14);
+    if(porcRefugio[0] >= 100){
+        rlutil::setColor(rlutil::GREEN);
+        cout << "Llevas acumulado 100% del refugio" << endl;
+    }else{
+        rlutil::setColor(rlutil::RED);
+        cout << "Llevas acumulado " << porcRefugio[0] << "% del refugio" << endl;
+    }
+    rlutil::setColor(rlutil::GREY);
+    return true;
 }
 
 bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia){
 
-    int materiales, materialesRecolectados;
     system("cls");
-    if(porcRefugio[0] < 100){
-        cout<<"Haz elegido recolectar materiales"<<endl;
-        cout<<"1- Ramas de arboles "<<endl;
-        cout<<"2- Ramas de arbustos"<<endl;
-        cout<<"3- Barro"<<endl;
-        cout<<"4- Rocas"<<endl;
-        cin>>materiales;
+    int materialesRecolectados;
+    int y = 0;
+    int eleccion = 1;
 
-        switch(materiales){
-            case 1:
-                cout << "Haz elegido ramas de arboles" << endl << endl;
-                materialesRecolectados=(rand()%15+10);
-                porcRefugio[0] += materialesRecolectados;
+    if(porcRefugio[0] < 100){
+        do{
+        rlutil::locate(1,1);
+        cout<<"Haz elegido recolectar materiales"<<endl;
+        rlutil::locate(1,3);
+        cout << "Elige el material a recolectar: " << endl;
+        mostrarSeleccionado("Ramas de arbol", 3, 5, y==0);
+        mostrarSeleccionado("Ramas en arbusto", 3, 6, y==1);
+        mostrarSeleccionado("Barro", 3, 7, y==2);
+        mostrarSeleccionado("Rocas", 3, 8, y==3);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(3,5+y);
+                y--;
+                if(y<0){
+                    y = 0;
+                }
                 break;
-            case 2:
-                cout << "Haz elegido ramas de arbustos" << endl << endl;
-                materialesRecolectados=(rand()%20+15);
-                porcRefugio[0] += materialesRecolectados;
+            case 115: // abajo
+                rlutil::locate(3,5+y);
+                y++;
+                if(y>3){
+                    y = 3;
+                }
                 break;
-            case 3:
-                cout << "Haz elegido barro" << endl << endl;
-                materialesRecolectados=(rand()%30+8);
-                porcRefugio[0] += materialesRecolectados;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido ramas de arbol" << endl << endl;
+                            materialesRecolectados=(rand()%15+10);
+                            porcRefugio[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        case 1:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido ramas de arbustos" << endl << endl;
+                            materialesRecolectados=(rand()%20+15);
+                            porcRefugio[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        case 2:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido barro" << endl << endl;
+                            materialesRecolectados=(rand()%30+8);
+                            porcRefugio[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        case 3:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido rocas" << endl << endl;
+                            materialesRecolectados=(rand()%35+5);
+                            porcRefugio[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        }
                 break;
-            case 4:
-                cout << "Haz elegido rocas" << endl << endl;
-                materialesRecolectados=(rand()%35+5);
-                porcRefugio[0] += materialesRecolectados;
-                break;
-            default:
-                cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
-                dia -= 1;
-                return false;
-                break;
-        }
+            }
+        }while(eleccion != 0);
+
         if(porcRefugio[0] >= 100){
             porcRefugio[0] = 100;
             if(diasDeArmado[0] == 0){
                 diasDeArmado[0] = dia+1;
             }
         }
-        cout << "Haz recolectado " << materialesRecolectados << " de materiales" << endl << endl;
+        rlutil::locate(1,12);
+        cout << "Haz recolectado " << materialesRecolectados <<"% de materiales" << endl << endl;
+        rlutil::locate(1,14);
+        if(kgAlimentos[0] >= 14){
+            rlutil::setColor(rlutil::GREEN);
+            cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        }else{
+            rlutil::setColor(rlutil::RED);
+            cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        }
+        rlutil::locate(1,15);
         if(porcRefugio[0] >= 100){
+            rlutil::setColor(rlutil::GREEN);
             cout << "Llevas acumulado 100% del refugio" << endl;
         }else{
+            rlutil::setColor(rlutil::RED);
             cout << "Llevas acumulado " << porcRefugio[0] << "% del refugio" << endl;
         }
-        cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        rlutil::setColor(rlutil::GREY);
         return true;
     }else{
         dia -= 1;
-        cout << "Te dije que el refugio ya esta 100% completado, mejor ir a recolectar alimentos" << endl;
+        rlutil::locate(1,1);
+        cout << "Te dije que el refugio ya esta 100% completado, mejor ir a recolectar alimentos" << endl << endl;
         return false;
     }
 }
@@ -168,7 +271,8 @@ void promedioAlimentos(const int TAM, int kgAlimentos[], string nombres[]){
 
     float prom = float(acum)/TAM;
 
-    cout << "Promedio de kg de alimentos: " << prom << endl;
+    cout << "PROMEDIO DE KG DE ALIMENTOS: " << prom << "KG" << endl;
+    cout << "JUGADORES QUE SUPERARON EL PROMEDIO DE KG DE ALIMENTOS:" << endl << endl;
     for(int i=0; i<TAM; i++){
         if(kgAlimentos[i] > prom){
             cout << nombres[i] << ": " << kgAlimentos[i] << "Kgs" << endl;
@@ -181,6 +285,7 @@ void refugioMasRapido(const int TAM, int diasDeArmado[], string nombres[]){
 
     int menor = 8;
     int pos;
+    cout << "JUGADOR MAS RAPIDO EN CONSTRUIR SU REFUGIO:" << endl << endl;
     for(int i=0; i<TAM; i++){
         if(diasDeArmado[i] < menor && diasDeArmado[i] > 0){
             menor = diasDeArmado[i];
@@ -194,6 +299,7 @@ void refugioMasRapido(const int TAM, int diasDeArmado[], string nombres[]){
 void refugioMas5Dias(const int TAM, int diasDeArmado[], string nombres[]){
 
     int cont = 0;
+    cout << "JUGADORES QUE TARDARON MAS DE 5 DIAS EN CONSTRUIR SU REFUGIO:" << endl << endl;
     for(int i=0; i<TAM; i++){
         if(diasDeArmado[i] > 5){
             cont++;
@@ -286,71 +392,94 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int kgAlimentos[],
     int puesto = 1;
     for(int i=0; i<TAM; i++){
         if (copiaDiasDeArmado[i] == 0 || copiaKgAlimentos[i] < 14) {
+            rlutil::setColor(rlutil::RED);
             cout << "eliminado\t" << copiaNombres[i] << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << "\t\t" << copiaEdades[i] << endl;
         } else {
+            rlutil::setColor(rlutil::GREY);
             cout << puesto++ << "\t\t" << copiaNombres[i] << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << "\t\t" << copiaEdades[i] << endl;
         }
     }
+    rlutil::setColor(rlutil::GREY);
 }
 
 
 int estadisticasEtapa1(const int TAM, int kgAlimentos[], int diasDeArmado[], string nombres[], int edades[], int &dia, bool jugadorVivo){
 
-    int opcionStats;
-    cout << "===========================================================================" << endl;
-    cout << "                           ESTADISTICAS ETAPA 1                            " << endl;
-    cout << "===========================================================================" << endl;
-    cout << "1- Participantes que superaron el promedio de kg de alimentos recolectados" << endl;
-    cout << "2- Participante mas rapido en construir su refugio" << endl;
-    cout << "3- Participantes que tardaron mas de 5 dias en constuir su refugio" << endl;
-    cout << "4- Tabla de posiciones" << endl;
-    cout << "5- Continuar a la segunda etapa" << endl;
-    cout << "0- Salir del juego" << endl;
-    cin >> opcionStats;
-
-    while(opcionStats != 0){
-        system("cls");
-        switch(opcionStats){
-            case 1:
-                promedioAlimentos(TAM, kgAlimentos, nombres);
-                break;
-            case 2:
-                refugioMasRapido(TAM, diasDeArmado, nombres);
-                break;
-            case 3:
-                refugioMas5Dias(TAM, diasDeArmado, nombres);
-                break;
-            case 4:
-                tablaPosicionesEtapa1(TAM, diasDeArmado, kgAlimentos, nombres, edades);
-                break;
-            case 5:
-                if(jugadorVivo){
-                    return opcionStats;
-                    break;
-                }else{
-                    cout << "Jugador eliminado. No puede avanzar a la segunda etapa." << endl;
-                    break;
-                }
-            case 0:
-                break;
-            default:
-                cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
-                break;
-        }
-        system("pause");
-        system("cls");
-
+    int opcionStats = 1;
+    int y = 0;
+    do{
+        rlutil::locate(1,1);
         cout << "===========================================================================" << endl;
+        rlutil::locate(1,2);
         cout << "                           ESTADISTICAS ETAPA 1                            " << endl;
+        rlutil::locate(1,3);
         cout << "===========================================================================" << endl;
-        cout << "1- Participantes que superaron el promedio de kg de alimentos recolectados" << endl;
-        cout << "2- Participante mas rapido en construir su refugio" << endl;
-        cout << "3- Participantes que tardaron mas de 5 dias en constuir su refugio" << endl;
-        cout << "4- Tabla de posiciones" << endl;
-        cout << "5- Continuar a la segunda etapa" << endl;
-        cout << "0- Salir del juego" << endl;
-        cin >> opcionStats;
-    }
+        mostrarSeleccionado("Participantes que superaron el promedio de kg de alimentos recolectados", 3, 4, y==0);
+        mostrarSeleccionado("Participantes mas rapido en construir su refugio", 3, 5, y==1);
+        mostrarSeleccionado("Participantes que tardaron mas de 5 dias en constuir su refugio", 3, 6, y==2);
+        mostrarSeleccionado("Tabla de posiciones", 3, 7, y==3);
+        mostrarSeleccionado("Continuar a la segunda etapa", 3, 8, y==4);
+        mostrarSeleccionado("Salir", 3, 9, y==5);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(3,4+y);
+                y--;
+                if(y<0){
+                    y = 0;
+                }
+                break;
+            case 115: // abajo
+                rlutil::locate(3,4+y);
+                y++;
+                if(y>5){
+                    y = 5;
+                }
+                break;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            system("cls");
+                            promedioAlimentos(TAM, kgAlimentos, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 1:
+                            system("cls");
+                            refugioMasRapido(TAM, diasDeArmado, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 2:
+                            system("cls");
+                            refugioMas5Dias(TAM, diasDeArmado, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 3:
+                            system("cls");
+                            tablaPosicionesEtapa1(TAM, diasDeArmado, kgAlimentos, nombres, edades);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 4:
+                            system("cls");
+                            if(jugadorVivo){
+                                return opcionStats = 5;
+                                break;
+                            }else{
+                                cout << "Jugador eliminado. No puede avanzar a la segunda etapa." << endl;
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+                        case 5:
+                            opcionStats = 0;
+                            break;
+                        }
+                break;
+            }
+    }while(opcionStats != 0);
 
     return opcionStats;
 
@@ -374,53 +503,93 @@ void chequearVivos(const int TAM, int kgAlimentos[], int diasDeRefugio[], int ju
 
 bool recolectarMaterialesBalsa(const int TAM, int kgAlimentos[], int porcBalsa[], int diasDeArmado[], int &dia){
 
-    int materiales, materialesRecolectados;
     system("cls");
-    if(porcBalsa[0] < 100){
-        cout<<"Haz elegido recolectar materiales"<<endl;
-        cout<<"1- Troncos de arboles"<<endl;
-        cout<<"2- Hojas de palmera"<<endl;
-        cout<<"3- Lianas" << endl;
-        cin>>materiales;
+    int materialesRecolectados;
+    int y = 0;
+    int eleccion = 1;
 
-        switch(materiales){
-            case 1:
-                cout << "Haz elegido troncos de arboles" << endl << endl;
-                materialesRecolectados=(rand()%15+10);
-                porcBalsa[0] += materialesRecolectados;
+    if(porcBalsa[0] < 100){
+        do{
+        rlutil::locate(1,1);
+        cout<<"Haz elegido recolectar materiales"<<endl;
+        rlutil::locate(1,3);
+        cout << "Elige el material a recolectar: " << endl;
+        mostrarSeleccionado("Troncos de arbol", 3, 5, y==0);
+        mostrarSeleccionado("Hojas de palmera", 3, 6, y==1);
+        mostrarSeleccionado("Lianas", 3, 7, y==2);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(3,5+y);
+                y--;
+                if(y<0){
+                    y = 0;
+                }
                 break;
-            case 2:
-                cout << "Haz elegido hojas de palmera" << endl << endl;
-                materialesRecolectados=(rand()%20+15);
-                porcBalsa[0] += materialesRecolectados;
+            case 115: // abajo
+                rlutil::locate(3,5+y);
+                y++;
+                if(y>2){
+                    y = 2;
+                }
                 break;
-            case 3:
-                cout << "Haz elegido lianas" << endl << endl;
-                materialesRecolectados=(rand()%30+8);
-                porcBalsa[0] += materialesRecolectados;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido troncos de arbol" << endl << endl;
+                            materialesRecolectados=(rand()%15+10);
+                            porcBalsa[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        case 1:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido hojas de palmera" << endl << endl;
+                            materialesRecolectados=(rand()%20+15);
+                            porcBalsa[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        case 2:
+                            rlutil::locate(1,10);
+                            cout << "Haz elegido lianas" << endl << endl;
+                            materialesRecolectados=(rand()%30+8);
+                            porcBalsa[0] += materialesRecolectados;
+                            eleccion = 0;
+                            break;
+                        }
                 break;
-            default:
-                cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
-                dia -= 1;
-                return false;
-                break;
-        }
+            }
+        }while(eleccion != 0);
+
         if(porcBalsa[0] >= 100){
             porcBalsa[0] = 100;
             if(diasDeArmado[0] == 0){
                 diasDeArmado[0] = dia+1;
             }
         }
-        cout << "Haz recolectado " << materialesRecolectados << " de materiales" << endl << endl;
+        rlutil::locate(1,12);
+        cout << "Haz recolectado " << materialesRecolectados <<"% de materiales" << endl << endl;
+        rlutil::locate(1,14);
+        if(kgAlimentos[0] >= 14){
+            rlutil::setColor(rlutil::GREEN);
+            cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        }else{
+            rlutil::setColor(rlutil::RED);
+            cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        }
+        rlutil::locate(1,15);
         if(porcBalsa[0] >= 100){
+            rlutil::setColor(rlutil::GREEN);
             cout << "Llevas acumulado 100% de la balsa" << endl;
         }else{
-            cout << "Llevas acumulado " << porcBalsa[0] << "% de la balsa" << endl;
+            rlutil::setColor(rlutil::RED);
+            cout << "Llevas acumulado " << porcBalsa[0] << "% de la balsa refugio" << endl;
         }
-        cout << "Llevas acumulado " << kgAlimentos[0] << "kg de alimentos" << endl;
+        rlutil::setColor(rlutil::GREY);
         return true;
     }else{
         dia -= 1;
+        rlutil::locate(1,1);
         cout << "Te dije que la balsa ya esta 100% completada, mejor ir a recolectar alimentos" << endl;
         return false;
     }
@@ -439,7 +608,8 @@ void promedioAlimentosEtapa2(const int TAM, int kgAlimentos[], int jugadoresVivo
 
     float prom = float(acum)/vivos;
 
-    cout << "Promedio de kg de alimentos: " << prom << endl;
+    cout << "PROMEDIO DE KGS DE ALIMENTO: " << prom << " KG" <<endl;
+    cout << "JUGADORES QUE SUPERARON EL PROMEDIO DE KGS DE ALIMENTO: " << endl << endl;
     for(int i=0; i<TAM; i++){
         if(kgAlimentos[i] > prom && jugadoresVivos[i] == 1){
             cout << nombres[i] << ": " << kgAlimentos[i] << "Kgs" << endl;
@@ -452,6 +622,7 @@ void refugioMasRapidoEtapa2(const int TAM, int diasDeArmado[], int jugadoresVivo
 
     int menor = 8;
     int pos;
+    cout << "JUGADOR MAS RAPIDO EN CONSTRUIR SU BALSA: " << endl << endl;
     for(int i=0; i<TAM; i++){
         if(diasDeArmado[i] < menor && diasDeArmado[i] > 0){
             if(jugadoresVivos[i] == 1){
@@ -551,75 +722,94 @@ void tablaPosicionesEtapa2(const int TAM, int diasDeArmado[], int kgAlimentos[],
     for(int i=0; i<TAM; i++){
         if(copiaJugadoresVivos[i] == 1){
             if (copiaDiasDeArmado[i] == 0 || copiaKgAlimentos[i] < 14) {
+                rlutil::setColor(rlutil::RED);
                 cout << "eliminado\t" << copiaNombres[i] << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << "\t\t" << copiaEdades[i] << endl;
             }else{
+                rlutil::setColor(rlutil::GREY);
                 cout << puesto++ << "\t\t" << copiaNombres[i] << "\t\t\t" << copiaDiasDeArmado[i] << "\t\t\t" << copiaKgAlimentos[i] << "\t\t" << copiaEdades[i] << endl;
             }
         }
     }
+    rlutil::setColor(rlutil::GREY);
 }
 
 int estadisticasEtapa2(const int TAM, int kgAlimentos[], int diasDeArmado[], int jugadoresVivos[], string nombres[], int edades[], int &dia, bool jugadorVivo){
 
-    system("pause");
+    int opcionStats = 1;
+    int y = 0;
     system("cls");
-    int opcionStats;
-    cout << "===========================================================================" << endl;
-    cout << "                           ESTADISTICAS ETAPA 2                            " << endl;
-    cout << "===========================================================================" << endl;
-    cout << "1- Participantes que superaron el promedio de kg de alimentos recolectados" << endl;
-    cout << "2- Participante mas rapido en construir su balsa" << endl;
-    cout << "3- Tabla de posiciones" << endl;
-    cout << "4- Continuar a la tercera etapa" << endl;
-    cout << "0- Salir del juego" << endl;
-    cin >> opcionStats;
-
-    while(opcionStats != 0){
-        system("cls");
-        switch(opcionStats){
-            case 1:
-                promedioAlimentosEtapa2(TAM, kgAlimentos, jugadoresVivos, nombres);
-                break;
-            case 2:
-                refugioMasRapidoEtapa2(TAM, diasDeArmado, jugadoresVivos, nombres);
-                break;
-            case 3:
-                tablaPosicionesEtapa2(TAM, diasDeArmado, kgAlimentos, jugadoresVivos, nombres, edades);
-                break;
-            case 4:
-                if(jugadorVivo){
-                    return opcionStats;
-                    break;
-                }else{
-                    cout << "Jugador eliminado. No puede avanzar a la tercera etapa." << endl;
-                    break;
-                }
-            case 0:
-                break;
-            default:
-                cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
-                break;
-        }
-        system("pause");
-        system("cls");
-
+    do{
+        rlutil::locate(1,1);
         cout << "===========================================================================" << endl;
+        rlutil::locate(1,2);
         cout << "                           ESTADISTICAS ETAPA 2                            " << endl;
+        rlutil::locate(1,3);
         cout << "===========================================================================" << endl;
-        cout << "1- Participantes que superaron el promedio de kg de alimentos recolectados" << endl;
-        cout << "2- Participante mas rapido en construir su balsa" << endl;
-        cout << "3- Tabla de posiciones" << endl;
-        cout << "4- Continuar a la tercera etapa" << endl;
-        cout << "0- Salir del juego" << endl;
-        cin >> opcionStats;
-    }
+        mostrarSeleccionado("Participantes que superaron el promedio de kg de alimentos recolectados", 3, 4, y==0);
+        mostrarSeleccionado("Participantes mas rapido en construir su balsa", 3, 5, y==1);
+        mostrarSeleccionado("Tabla de posiciones", 3, 6, y==2);
+        mostrarSeleccionado("Continuar a la tercer etapa", 3, 7, y==3);
+        mostrarSeleccionado("Salir", 3, 8, y==4);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(3,4+y);
+                y--;
+                if(y<0){
+                    y = 0;
+                }
+                break;
+            case 115: // abajo
+                rlutil::locate(3,4+y);
+                y++;
+                if(y>4){
+                    y = 4;
+                }
+                break;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            system("cls");
+                            promedioAlimentosEtapa2(TAM, kgAlimentos, jugadoresVivos, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 1:
+                            system("cls");
+                            refugioMasRapidoEtapa2(TAM, diasDeArmado, jugadoresVivos, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 2:
+                            system("cls");
+                            tablaPosicionesEtapa2(TAM, diasDeArmado, kgAlimentos, jugadoresVivos, nombres, edades);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 3:
+                            system("cls");
+                            if(jugadorVivo){
+                                return opcionStats = 4;
+                                break;
+                            }else{
+                                cout << "Jugador eliminado. No puede avanzar a la tercer etapa." << endl;
+                                system("pause");
+                                system("cls");
+                                break;
+                            }
+                        case 4:
+                            opcionStats = 0;
+                            break;
+                        }
+                break;
+            }
+    }while(opcionStats != 0);
 
     return opcionStats;
+
 }
 
 void eleccionFinal(int eleccion, int horasDeLlegada[]){
-
-    bool opcionValida = false;
 
     // Textos de los 4 posibles finales
     string textos[4] = {
@@ -664,43 +854,78 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
 
     string direcciones[4] = {"Norte", "Sur", "Este", "Oeste"};
 
+    system("cls");
+    int opcionFinal = 1;
+    int y = 0;
     do {
-        system("cls");
+        rlutil::locate(1,1);
         cout << "Etapa 3." << endl;
+        rlutil::locate(1,2);
         cout << "Elija una direccion para escapar con la balsa: " << endl << endl;
-        cout << "1- Norte" << endl;
-        cout << "2- Sur" << endl;
-        cout << "3- Este" << endl;
-        cout << "4- Oeste" << endl;
-        cin >> eleccion;
+        mostrarSeleccionado("Norte", 1, 3, y == 0);
+        mostrarSeleccionado("Sur", 1, 4, y == 1);
+        mostrarSeleccionado("Este", 1, 5, y == 2);
+        mostrarSeleccionado("Oeste", 1, 6, y == 3);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(1,3+y);
+                cout << " ";
+                y--;
+                if(y<0){
+                    y = 0;
+                }
+                break;
+            case 115: // abajo
+                rlutil::locate(1,3+y);
+                cout << " ";
+                y++;
+                if(y>3){
+                    y = 3;
+                }
+                break;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            system("cls");
+                            cout << "Haz elegido el camino " << direcciones[y] << "." << endl << endl;
+                            cout << textos[y] << endl << endl;
+                            opcionFinal = 0;
+                            break;
+                        case 1:
+                            system("cls");
+                            cout << "Haz elegido el camino " << direcciones[y] << "." << endl << endl;
+                            cout << textos[y] << endl << endl;
+                            opcionFinal = 0;
+                            break;
+                        case 2:
+                            system("cls");
+                            cout << "Haz elegido el camino " << direcciones[y] << "." << endl << endl;
+                            cout << textos[y] << endl << endl;
+                            opcionFinal = 0;
+                            break;
+                        case 3:
+                            system("cls");
+                            cout << "Haz elegido el camino " << direcciones[y] << "." << endl << endl;
+                            cout << textos[y] << endl << endl;
+                            opcionFinal = 0;
+                        }
+                break;
+            }
+    } while (opcionFinal != 0);
 
-        if (eleccion < 1 || eleccion > 4) {
-            system("cls");
-            cout << "No ha elegido una opcion valida. Vuelva a seleccionar." << endl;
-            system("pause");
-            continue;
-        }
-
-        system("cls");
-        int indiceEleccion = eleccion - 1;
-
-        cout << "Has elegido el camino " << direcciones[indiceEleccion] << "." << endl << endl;
-        cout << textos[indiceEleccion] << endl << endl;
-
-        if (resultado[indiceEleccion] == 1) {
-            horasDeLlegada[0] = (rand()%12+4);
-            cout << "Has tardado " << horasDeLlegada[0] << " horas..." << endl;
-            cout << "Felicidades! Has logrado escapar" << endl << endl;
-        } else {
-            horasDeLlegada[0] = (rand()%4+24);
-            cout << "Has tardado " << horasDeLlegada[0] << " horas..." << endl;
-            cout << "Lamentablemente, no haz llegado a tiempo." << endl << endl;
-        }
-
-        opcionValida = true;
-
-    } while (!opcionValida);
-
+    if (resultado[y] == 1) {
+        horasDeLlegada[0] = (rand()%12+4);
+        rlutil::setColor(rlutil::GREY);
+        cout << "Haz tardado " << horasDeLlegada[0] << " horas..." << endl;
+        cout << "Felicidades! Haz logrado escapar" << endl << endl;
+    } else {
+        horasDeLlegada[0] = (rand()%4+25);
+        rlutil::setColor(rlutil::RED);
+        cout << "Haz tardado " << horasDeLlegada[0] << " horas..." << endl;
+        cout << "Lamentablemente, no haz llegado a tiempo." << endl << endl;
+    }
+    rlutil::setColor(rlutil::GREY);
     if(horasDeLlegada[0] > 24){
         horasDeLlegada[0] = 0;
     }
@@ -724,6 +949,7 @@ void masRapidoEtapa3(const int TAM, int horasDeLlegada[], int jugadoresVivos[], 
     int menor = 25;
     int cant = 0;
 
+    cout << "JUGADOR MAS RAPIDO EN ESCAPAR:" << endl << endl;
     for(int i=0; i<TAM; i++){
 
         if((horasDeLlegada[i] < menor && horasDeLlegada[i] != 0) && jugadoresVivos[i] != 0){
@@ -736,7 +962,7 @@ void masRapidoEtapa3(const int TAM, int horasDeLlegada[], int jugadoresVivos[], 
     if(cant != 0){
         cout << nombres[pos] << " en " << menor << " horas" << endl;
     }else{
-        cout << "Ningun jugador ha llegado al final." << endl;
+        cout << "Ningun jugador ha llegado a escapar." << endl;
     }
 
 }
@@ -796,16 +1022,20 @@ void tablaPosicionesEtapa3(const int TAM, int horasDeLlegada[], int jugadoresViv
     for(int i=0; i<TAM; i++){
         if(copiaJugadoresVivos[i]){
             if(copiaHoras[i] == 0){
+                rlutil::setColor(rlutil::RED);
                 cout << "no ha llegado\t" << copiaNombres[i] << "\t\t" << copiaHoras[i] << "\t\t" << copiaEdades[i] << endl;
             }else{
                 if(copiaHoras[i] == copiaHoras[i+1]){
+                    rlutil::setColor(rlutil::GREY);
                     cout << puesto << "\t\t" << copiaNombres[i] << "\t\t" << copiaHoras[i] << "\t\t" << copiaEdades[i] << endl;
                 }else{
+                    rlutil::setColor(rlutil::GREY);
                     cout << puesto++ << "\t\t" << copiaNombres[i] << "\t\t" << copiaHoras[i] << "\t\t" << copiaEdades[i] << endl;
                 }
             }
         }
     }
+    rlutil::setColor(rlutil::GREY);
 }
 
 void reiniciarJuego(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int jugadoresVivos[], int &dia){
@@ -840,7 +1070,7 @@ void rangoEtario(const int TAM, int edades[], string nombres[]){
 
     int rango = mayor - menor;
 
-    cout << "Rango etario de los participantes: " << rango << " anios" <<endl;
+    cout << "Rango etario de los participantes: " << rango << " anios" << endl << endl;
     cout << "Participante mayor: " << nombreMayor << " " << mayor << " anios" << endl;
     cout << "Participante mas joven: " << nombreMenor << " " << menor << " anios" << endl << endl;
 
@@ -848,54 +1078,69 @@ void rangoEtario(const int TAM, int edades[], string nombres[]){
 
 int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int jugadoresVivos[], int horasDeLlegada[], int porcRefugio[], string nombres[], int edades[],int &dia, bool jugadorVivo){
 
-    int opcionStats;
-    cout << "===========================================================================" << endl;
-    cout << "                           ESTADISTICAS ETAPA 3                            " << endl;
-    cout << "===========================================================================" << endl;
-    cout << "1- Participante mas rapido en llegar al destino" << endl;
-    cout << "2- Tabla de posiciones" << endl;
-    cout << "3- Rango etario de participantes" << endl;
-    cout << "4- Volver a jugar" << endl;
-    cout << "0- Salir" << endl;
-    cin >> opcionStats;
-
-    while(opcionStats != 0){
-        system("cls");
-        switch(opcionStats){
-            case 1:
-                masRapidoEtapa3(TAM, horasDeLlegada, jugadoresVivos, nombres);
-                break;
-            case 2:
-                tablaPosicionesEtapa3(TAM, horasDeLlegada, jugadoresVivos, nombres, edades);
-                break;
-            case 3:
-                rangoEtario(TAM, edades, nombres);
-                break;
-            case 4:
-                reiniciarJuego(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
-                return opcionStats;
-                break;
-            case 0:
-                return opcionStats;
-                break;
-            default:
-                cout << "No ha elegido una opcion valida. Vuelva a seleccionar" << endl;
-                break;
-
-        }
-
-        system("pause");
-        system("cls");
+    int opcionStats = 1;
+    int y = 0;
+    system("cls");
+    do{
+        rlutil::locate(1,1);
         cout << "===========================================================================" << endl;
+        rlutil::locate(1,2);
         cout << "                           ESTADISTICAS ETAPA 3                            " << endl;
+        rlutil::locate(1,3);
         cout << "===========================================================================" << endl;
-        cout << "1- Participante mas rapido en llegar al destino" << endl;
-        cout << "2- Tabla de posiciones" << endl;
-        cout << "3- Rango etario de participantes" << endl;
-        cout << "4- Volver a jugar" << endl;
-        cout << "0- Salir" << endl;
-        cin >> opcionStats;
-    }
+        mostrarSeleccionado("Participante mas rapido en escapar", 3, 4, y==0);
+        mostrarSeleccionado("Rango etario de los participantes", 3, 5, y==1);
+        mostrarSeleccionado("Tabla de posiciones", 3, 6, y==2);
+        mostrarSeleccionado("Volver a jugar", 3, 7, y==3);
+        mostrarSeleccionado("Salir", 3, 8, y==4);
+        int tecla = rlutil::getkey();
+        switch(tecla){
+            case 119: //arriba
+                rlutil::locate(3,4+y);
+                y--;
+                if(y<0){
+                    y = 0;
+                }
+                break;
+            case 115: // abajo
+                rlutil::locate(3,4+y);
+                y++;
+                if(y>4){
+                    y = 4;
+                }
+                break;
+            case 1: // enter
+                    switch(y){
+                        case 0:
+                            system("cls");
+                            masRapidoEtapa3(TAM, horasDeLlegada, jugadoresVivos, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 1:
+                            system("cls");
+                            rangoEtario(TAM, edades, nombres);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 2:
+                            system("cls");
+                            tablaPosicionesEtapa3(TAM, horasDeLlegada, jugadoresVivos, nombres, edades);
+                            system("pause");
+                            system("cls");
+                            break;
+                        case 3:
+                            system("cls");
+                            reiniciarJuego(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
+                            return opcionStats = 3;
+                        case 4:
+                            opcionStats = 0;
+                            break;
+                        }
+                break;
+            }
+    }while(opcionStats != 0);
 
     return opcionStats;
+
 }
