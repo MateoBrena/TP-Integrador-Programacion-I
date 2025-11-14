@@ -1,23 +1,23 @@
 # 🌴 Supervivencia en la Selva 🏕️
 
 ## 📖 Tabla de Contenidos
-1. [🌟 Descripción](#descripcion)
-2. [🎮 Cómo jugar](#como-jugar)
-3. [🕹️ Controles](#controles)
-4. [✨ Características del juego](#caracteristicas-del-juego)
-5. [⚙️ Funciones principales](#funciones-principales)
-6. [💻 Compilación](#compilacion)
-7. [📂 Estructura del proyecto](#estructura-del-proyecto)
+1. [Descripción](#descripcion)
+2. [Como jugar](#como-jugar)
+3. [Controles](#controles)
+4. [Caracteristicas del juego](#caracteristicas-del-juego)
+5. [Funciones principales](#funciones-principales)
+6. [Compilacion](#compilacion)
+7. [Estructura del proyecto](#estructura-del-proyecto)
 
 ---
 
-## 🌟 Descripción
+## Descripción 🌟
 "Supervivencia en la Selva" es un juego de supervivencia donde los jugadores deben recolectar alimentos, construir refugios y una balsa para escapar de la jungla.  
 Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrentándolo a desafíos tanto del entorno como de otros jugadores controlados por la computadora.
 
 ---
 
-## 🎮 Cómo jugar
+## Cómo jugar 🎮
 El juego se desarrolla en varias etapas:  
 
 1. Recolecta alimentos suficientes (2kg por día).  
@@ -29,14 +29,14 @@ El juego se desarrolla en varias etapas:
 
 ---
 
-## 🕹️ Controles
+## Controles 🕹️
 - **W / Arriba**: Mover selección hacia arriba  
 - **S / Abajo**: Mover selección hacia abajo  
 - **Enter**: Confirmar elección
 
 ---
 
-## ✨ Características del juego
+## Características del juego ✨
 - Multietapa: Refugio, balsa y desafío final del río  
 - Competencia contra bots: Otros jugadores simulan decisiones  
 - Gestión de recursos: Alimentos, materiales y tiempo  
@@ -45,7 +45,7 @@ El juego se desarrolla en varias etapas:
 
 ---
 
-## ⚙️ Funciones principales
+## Funciones principales ⚙️
 - `nombreYEdad()`: Solicita los nombres y edades de los jugadores  
 - `recolectarAlimentos()`: Permite recolectar alimentos y registrar progresos  
 - `recolectarMateriales()`: Permite recolectar materiales para refugio o balsa  
@@ -59,34 +59,30 @@ El juego se desarrolla en varias etapas:
 ## Compilacion 💻
 Se necesita un compilador de C++ compatible con C++11 o superior.
 
-### 🪟 Windows
+### Windows 🪟
 1. Instalar [MinGW](http://www.mingw.org/) o usar Visual Studio  
 2. Abrir la terminal y compilar:
-
-`bash`
+```bash
 g++ main.cpp Funciones.cpp -o Supervivencia.exe
 Ejecutar:
 
-`bash`
 Supervivencia.exe
 
-### 🐧 Linux
+### Linux 🐧
 Instalar g++ si no está disponible:
 
-`bash`
 sudo apt update
 sudo apt install g++
 
 #### Compilar:
 
-`bash`
 g++ main.cpp Funciones.cpp -o Supervivencia
 Ejecutar:
 
-`bash`
 ./Supervivencia
 
-## 📂 Estructura del proyecto
+## Estructura del proyecto
+```text
 SupervivenciaEnLaSelva/
 │
 ├─ main.cpp           # Archivo principal con la lógica del juego
