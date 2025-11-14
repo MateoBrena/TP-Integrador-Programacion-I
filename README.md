@@ -4,10 +4,10 @@
 
 ---
 
-## 📖 **Tabla de Contenidos**
-1. [Descripción](#descripción)
-2. [Cómo jugar](#cómo-jugar)
-3. [Características del juego](#características-del-juego)
+## 📖 Tabla de Contenidos
+1. [Descripcion](#descripcion)
+2. [Como jugar](#como-jugar)
+3. [Caracteristicas del juego](#caracteristicas-del-juego)
 4. [Controles](#controles)
 5. [Estructura del proyecto](#estructura-del-proyecto)
 6. [Notas](#notas)
@@ -81,3 +81,4 @@ SupervivenciaEnLaSelva/
 - Diseñado en **C++ moderno**, compatible con compiladores estándar.
 
 > 🌟 ¡Prepárate para sobrevivir en la jungla y demostrar tus habilidades de supervivencia!
+
