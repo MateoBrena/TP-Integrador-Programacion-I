@@ -34,6 +34,10 @@
 		</Compiler>
 		<Unit filename="Funciones.cpp" />
 		<Unit filename="Funciones.h" />
+		<Unit filename="funciones_stats.cpp" />
+		<Unit filename="funciones_stats.h" />
+		<Unit filename="funciones_visuales.cpp" />
+		<Unit filename="funciones_visuales.h" />
 		<Unit filename="main.cpp" />
 		<Extensions />
 	</Project>

@@ -40,7 +40,6 @@ int main(){
             nombreYEdad(TAM, nombres, edades);
             int nroEtapa = 1;
             mostrarTextosEtapa(nroEtapa, nombres);
-            porcRefugio[0]=50;
             int eleccion;
             string opcionesMenu[2] = {};
             for(dia=0; dia<7; dia++){
@@ -55,7 +54,7 @@ int main(){
 
                 bool seguir = true;
                 do{
-                    int seleccion = mostrarMenu(opcionesMenu, 2, 2, 3);
+                    int seleccion = mostrarMenu(opcionesMenu, 2, 1, 3);
                     if (seleccion == 0) {
                         eleccion = 1;
                         seguir = false;
@@ -98,7 +97,6 @@ int main(){
                     diasDeArmado[i] = 0;
                     porcRefugio[i] = 0;
                 }
-                porcRefugio[0] = 50;
                 string opcionesMenu[2] = {};
                 for (dia=0; dia<6; dia++){
                     cout << "Dia " << dia+1 << endl;
@@ -111,7 +109,7 @@ int main(){
 
                     bool seguir = true;
                     do{
-                        int seleccion = mostrarMenu(opcionesMenu, 2, 2, 3);
+                        int seleccion = mostrarMenu(opcionesMenu, 2, 1, 3);
                         if (seleccion == 0) {
                             eleccion = 1;
                             seguir = false;
