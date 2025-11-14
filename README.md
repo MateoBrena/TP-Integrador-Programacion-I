@@ -15,6 +15,7 @@
 
 <h2 id="descripcion">🌟 Descripción</h2>
 <p>
+El proyecto es el trabajo integrador de la materia Programacion I<br>
 "JUNGLA" es un juego de supervivencia donde el jugador debe recolectar alimentos, construir su refugio y una balsa para escapar de la jungla.<br>
 Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrentándolo a desafíos tanto del entorno
 </p>
@@ -83,6 +84,7 @@ sudo apt install g++</code></pre>
 ├─ rlutil.h           # Librería externa para control de consola
 └─ README.md          # Documentación del proyecto
 </code></pre>
+
 
 
 
