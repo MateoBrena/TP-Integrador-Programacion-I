@@ -14,7 +14,7 @@
 
 ---
 
-## 🏹 **Descripción**
+## Descripcion
 
 En **Supervivencia en la Selva**:
 - Te despiertas perdido en medio de la jungla sin recuerdos.  
@@ -81,4 +81,5 @@ SupervivenciaEnLaSelva/
 - Diseñado en **C++ moderno**, compatible con compiladores estándar.
 
 > 🌟 ¡Prepárate para sobrevivir en la jungla y demostrar tus habilidades de supervivencia!
+
 
