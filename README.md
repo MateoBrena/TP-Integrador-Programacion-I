@@ -48,13 +48,28 @@ Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrent
 
 <h2 id="funciones-principales">⚙️ Funciones principales</h2>
 <ul>
-  <li><code>nombreYEdad()</code>: Solicita los nombres y edades de los jugadores</li>
-  <li><code>recolectarAlimentos()</code>: Permite recolectar alimentos y registrar progresos</li>
-  <li><code>recolectarMateriales()</code>: Permite recolectar materiales para refugio o balsa</li>
-  <li><code>recoleccionBots()</code>: Controla la recolección de los jugadores simulados</li>
-  <li><code>estadisticasEtapa1()</code> / <code>estadisticasEtapa2()</code> / <code>estadisticasEtapa3()</code>: Muestra estadísticas al final de cada etapa</li>
-  <li><code>chequearVivos()</code>: Determina qué jugadores siguen vivos</li>
-  <li><code>eleccionFinal()</code> / <code>eleccionFinalBots()</code>: Controlan la decisión final en el río</li>
+  <li><strong>Funciones del juego (`Funciones.h`)</strong>
+    <ul>
+      <li><code>nombreYEdad()</code>: Solicita los nombres y edades de los jugadores</li>
+      <li><code>recolectarAlimentos()</code>: Permite recolectar alimentos y registrar progresos</li>
+      <li><code>recolectarMateriales()</code>: Permite recolectar materiales para refugio o balsa</li>
+      <li><code>recoleccionBots()</code>: Controla la recolección de los jugadores simulados</li>
+    </ul>
+  </li>
+  <li><strong>Funciones visuales (`funciones_visuales.h`)</strong>
+    <ul>
+      <li><code>mostrarBannerInicial()</code>: Muestra el banner de inicio del juego</li>
+      <li><code>mostrarMenu()</code>: Muestra un menú y devuelve la opción elegida</li>
+      <li><code>mostrarTablasFinEtapa()</code>: Muestra tablas de resultados al final de cada etapa</li>
+    </ul>
+  </li>
+  <li><strong>Funciones estadísticas (`funciones_stats.h`)</strong>
+    <ul>
+      <li><code>promedioAlimentos()</code>: Calcula y muestra el promedio de alimentos por jugador</li>
+      <li><code>tablaPosiciones()</code>: Genera la tabla de posiciones de cada etapa</li>
+      <li><code>estadisticasEtapa()</code>: Muestra estadísticas finales de las etapas 1 y 2</li>
+    </ul>
+  </li>
 </ul>
 
 <h2 id="compilacion">Compilación</h2>
@@ -62,7 +77,7 @@ Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrent
 <h3>🪟 Windows</h3>
 <p>1. Instalar <a href="http://www.mingw.org/">MinGW</a> o usar Visual Studio</p>
 <p>2. Abrir la terminal y compilar:</p>
-<pre><code>g++ main.cpp Funciones.cpp -o Jungla.exe</code></pre>
+<pre><code>g++ main.cpp Funciones.cpp funciones_visuales.cpp funciones_stats.cpp -o Jungla.exe</code></pre>
 <p>3. Ejecutar:</p>
 <pre><code>Jungla.exe</code></pre>
 
@@ -71,21 +86,23 @@ Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrent
 <pre><code>sudo apt update
 sudo apt install g++</code></pre>
 <p>2. Compilar:</p>
-<pre><code>g++ main.cpp Funciones.cpp -o Jungla</code></pre>
+<pre><code>g++ main.cpp Funciones.cpp funciones_visuales.cpp funciones_stats.cpp -o Jungla</code></pre>
 <p>3. Ejecutar:</p>
 <pre><code>./Jungla</code></pre>
 
 <h2 id="estructura-del-proyecto">📂 Estructura del proyecto</h2>
 <pre><code>Jungla/
 │
-├─ main.cpp           # Archivo principal con la lógica del juego
-├─ Funciones.h        # Declaración de funciones auxiliares
-├─ Funciones.cpp      # Implementación de las funciones del juego
-├─ rlutil.h           # Librería externa para control de consola
-└─ README.md          # Documentación del proyecto
+├─ main.cpp                     # Archivo principal con la lógica del juego
+├─ Funciones.h                  # Declaración de funciones del juego
+├─ Funciones.cpp                # Implementación de funciones del juego
+├─ funciones_visuales.h          # Declaración de funciones visuales y de menús
+├─ funciones_visuales.cpp        # Implementación de funciones visuales
+├─ funciones_stats.h             # Declaración de funciones estadísticas
+├─ funciones_stats.cpp           # Implementación de funciones estadísticas
+├─ rlutil.h                      # Librería externa para control de consola
+└─ README.md                     # Documentación del proyecto
 </code></pre>
-
-
 
 
 
