@@ -6,7 +6,7 @@
 3. [🕹️ Controles](#controles)
 4. [✨ Características del juego](#características-del-juego)
 5. [⚙️ Funciones principales](#funciones-principales)
-6. [💻 Compilación](#compilación)
+6. [💻 Compilación](#compilacion)
 7. [📂 Estructura del proyecto](#estructura-del-proyecto)
 
 ---
@@ -56,39 +56,37 @@ El juego se desarrolla en varias etapas:
 
 ---
 
-## 💻 Compilación
+## Compilación 💻
 Se necesita un compilador de C++ compatible con C++11 o superior.
 
 ### 🪟 Windows
 1. Instalar [MinGW](http://www.mingw.org/) o usar Visual Studio  
 2. Abrir la terminal y compilar:
 
-bash
+`bash`
 g++ main.cpp Funciones.cpp -o Supervivencia.exe
 Ejecutar:
 
-bash
+`bash`
 Supervivencia.exe
 
 ### 🐧 Linux
 Instalar g++ si no está disponible:
 
-bash
+`bash`
 sudo apt update
 sudo apt install g++
 
-Compilar:
+#### Compilar:
 
-bash
+`bash`
 g++ main.cpp Funciones.cpp -o Supervivencia
 Ejecutar:
 
-bash
+`bash`
 ./Supervivencia
 
 ## 📂 Estructura del proyecto
-bash
-Copiar código
 SupervivenciaEnLaSelva/
 │
 ├─ main.cpp           # Archivo principal con la lógica del juego
@@ -96,4 +94,5 @@ SupervivenciaEnLaSelva/
 ├─ Funciones.cpp      # Implementación de las funciones del juego
 ├─ rlutil.h           # Librería externa para control de consola
 └─ README.md          # Documentación del proyecto
+
 
