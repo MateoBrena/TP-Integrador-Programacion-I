@@ -1,10 +1,10 @@
 # 🌴 Supervivencia en la Selva 🏕️
 
 ## 📖 Tabla de Contenidos
-1. [🌟 Descripción](#descripción)
-2. [🎮 Cómo jugar](#cómo-jugar)
+1. [🌟 Descripción](#descripcion)
+2. [🎮 Cómo jugar](#como-jugar)
 3. [🕹️ Controles](#controles)
-4. [✨ Características del juego](#características-del-juego)
+4. [✨ Características del juego](#caracteristicas-del-juego)
 5. [⚙️ Funciones principales](#funciones-principales)
 6. [💻 Compilación](#compilacion)
 7. [📂 Estructura del proyecto](#estructura-del-proyecto)
@@ -94,6 +94,7 @@ SupervivenciaEnLaSelva/
 ├─ Funciones.cpp      # Implementación de las funciones del juego
 ├─ rlutil.h           # Librería externa para control de consola
 └─ README.md          # Documentación del proyecto
+
 
 
 
