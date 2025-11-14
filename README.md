@@ -1,85 +1,99 @@
-# 🌴 **SUPERVIVENCIA EN LA SELVA** 🐒
-
-¡Bienvenido a la jungla! Sobrevive recolectando alimentos, construyendo refugios y tomando decisiones que definirán tu destino.  
-
----
+# 🌴 Supervivencia en la Selva 🏕️
 
 ## 📖 Tabla de Contenidos
-1. [Descripcion](#descripcion)
-2. [Como jugar](#como-jugar)
-3. [Caracteristicas del juego](#caracteristicas-del-juego)
-4. [Controles](#controles)
-5. [Estructura del proyecto](#estructura-del-proyecto)
-6. [Notas](#notas)
+1. [🌟 Descripción](#descripción)
+2. [🎮 Cómo jugar](#cómo-jugar)
+3. [🕹️ Controles](#controles)
+4. [✨ Características del juego](#características-del-juego)
+5. [⚙️ Funciones principales](#funciones-principales)
+6. [💻 Compilación](#compilación)
+7. [📂 Estructura del proyecto](#estructura-del-proyecto)
 
 ---
 
-## Descripcion
-
-En **Supervivencia en la Selva**:
-- Te despiertas perdido en medio de la jungla sin recuerdos.  
-- Debes recolectar **alimentos** 🍎 (2 kg por día) para mantenerte vivo.  
-- Construye **refugios** 🛖 y **balsas** 🚣 para avanzar en el juego.   
-- Supera distintas **etapas** con desafíos cada vez más difíciles.  
-
-> ⚠️ La jungla es impredecible: cada elección cuenta.
+## 🌟 Descripción
+"Supervivencia en la Selva" es un juego de supervivencia donde los jugadores deben recolectar alimentos, construir refugios y una balsa para escapar de la jungla.  
+Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrentándolo a desafíos tanto del entorno como de otros jugadores controlados por la computadora.
 
 ---
 
-## 🎮 **Cómo jugar**
+## 🎮 Cómo jugar
+El juego se desarrolla en varias etapas:  
 
-1. Usa las teclas **W** (arriba) y **S** (abajo) para navegar por los menús.  
-2. Presiona **Enter** para seleccionar opciones.  
-3. Durante el juego:
-   - Recolecta alimentos 🍌🥩 y materiales 🪵 para construir.  
-   - Construye refugios 🛖 y balsas 🚣 antes de que sea tarde.  
-   - Toma decisiones críticas en cada etapa.  
+1. Recolecta alimentos suficientes (2kg por día).  
+2. Construye tu refugio y, en etapas posteriores, una balsa para escapar.  
+3. Toma decisiones estratégicas diariamente sobre tus acciones.  
+4. Sobrevive a los días, administra recursos y compite contra otros jugadores simulados.  
 
-### 💡 Tips:  
-- Observa tus recursos antes de decidir.  
-- Los alimentos sobrantes de la primer etapa serán utilizados en la segunda!  
+**Objetivo:** Llegar a la última etapa y elegir el camino correcto en el río para escapar de la jungla.
 
 ---
 
-## ✨ **Características del juego**
-
-| Característica | Detalle |
-|----------------|---------|
-| Plataforma | Consola de texto |
-| Jugadores | 1 jugador |
-| Objetivo | Sobrevivir y completar todas las etapas |
-| Herramientas | Recolección, construcción, decisiones |
+## 🕹️ Controles
+- **W / Arriba**: Mover selección hacia arriba  
+- **S / Abajo**: Mover selección hacia abajo  
+- **Enter**: Confirmar elección
 
 ---
 
-## ⌨️ **Controles**
-
-| Acción | Tecla |
-|--------|-------|
-| Mover arriba | W |
-| Mover abajo | S |
-| Seleccionar | Enter |
+## ✨ Características del juego
+- Multietapa: Refugio, balsa y desafío final del río  
+- Competencia contra bots: Otros jugadores simulan decisiones  
+- Gestión de recursos: Alimentos, materiales y tiempo  
+- Sistema de estadísticas diario para evaluar rendimiento y supervivencia  
+- Mensajes inmersivos y narrativa interactiva  
 
 ---
 
-## 📂 **Estructura del proyecto**
+## ⚙️ Funciones principales
+- `nombreYEdad()`: Solicita los nombres y edades de los jugadores  
+- `recolectarAlimentos()`: Permite recolectar alimentos y registrar progresos  
+- `recolectarMateriales()`: Permite recolectar materiales para refugio o balsa  
+- `recoleccionBots()`: Controla la recolección de los jugadores simulados  
+- `estadisticasEtapa1() / estadisticasEtapa2() / estadisticasEtapa3()`: Muestra estadísticas al final de cada etapa  
+- `chequearVivos()`: Determina qué jugadores siguen vivos  
+- `eleccionFinal() / eleccionFinalBots()`: Controlan la decisión final en el río
 
+---
+
+## 💻 Compilación
+Se necesita un compilador de C++ compatible con C++11 o superior.
+
+### 🪟 Windows
+1. Instalar [MinGW](http://www.mingw.org/) o usar Visual Studio  
+2. Abrir la terminal y compilar:
+
+bash
+g++ main.cpp Funciones.cpp -o Supervivencia.exe
+Ejecutar:
+
+bash
+Supervivencia.exe
+
+### 🐧 Linux
+Instalar g++ si no está disponible:
+
+bash
+sudo apt update
+sudo apt install g++
+
+Compilar:
+
+bash
+g++ main.cpp Funciones.cpp -o Supervivencia
+Ejecutar:
+
+bash
+./Supervivencia
+
+## 📂 Estructura del proyecto
+bash
+Copiar código
 SupervivenciaEnLaSelva/
 │
-├── main.cpp # Lógica principal del juego
-├── Funciones.cpp # Funciones auxiliares
-├── Funciones.h # Declaraciones de funciones
-├── rlutil.h # Librería para manejo de consola
-├── README.md # Documentación del proyecto
-
----
-
-## 📝 **Notas**
-
-- El juego se ejecuta en **consola de texto**; no requiere interfaz gráfica.  
-- Los menús y títulos se resaltan con colores usando **rlutil**.    
-- Diseñado en **C++ moderno**, compatible con compiladores estándar.
-
-> 🌟 ¡Prepárate para sobrevivir en la jungla y demostrar tus habilidades de supervivencia!
-
+├─ main.cpp           # Archivo principal con la lógica del juego
+├─ Funciones.h        # Declaración de funciones auxiliares
+├─ Funciones.cpp      # Implementación de las funciones del juego
+├─ rlutil.h           # Librería externa para control de consola
+└─ README.md          # Documentación del proyecto
 
