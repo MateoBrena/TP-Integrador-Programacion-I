@@ -59,14 +59,14 @@ int main(){
                     rlutil::locate(2,2+y);
                     y--;
                     if(y<0){
-                        y = 0;
+                        y = 1;
                     }
                     break;
                 case 115: // abajo
                     rlutil::locate(2,2+y);
                     y++;
                     if(y>1){
-                        y = 1;
+                        y = 0;
                     }
                     break;
                 case 1: // enter
@@ -117,14 +117,14 @@ int main(){
                             rlutil::locate(3,3+y);
                             y--;
                             if(y<0){
-                                y = 0;
+                                y = 1;
                             }
                             break;
                         case 115: // abajo
                             rlutil::locate(3,3+y);
                             y++;
                             if(y>1){
-                                y = 1;
+                                y = 0;
                             }
                             break;
                         case 1: // enter
@@ -239,14 +239,14 @@ int main(){
                                 rlutil::locate(3,3+y);
                                 y--;
                                 if(y<0){
-                                    y = 0;
+                                    y = 1;
                                 }
                                 break;
                             case 115: // abajo
                                 rlutil::locate(3,3+y);
                                 y++;
                                 if(y>1){
-                                    y = 1;
+                                    y = 0;
                                 }
                                 break;
                             case 1: // enter
@@ -372,5 +372,3 @@ int main(){
 
     return 0;
 }
-
-Este es el main.cpp de mi proyecto de juego. Crees que puedes armar un readme.MD para acompañarlo?

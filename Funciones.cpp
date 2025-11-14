@@ -68,14 +68,14 @@ void recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], in
                 rlutil::locate(3,5+y);
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 2;
                 }
                 break;
             case 115: // abajo
                 rlutil::locate(3,5+y);
                 y++;
                 if(y>2){
-                    y = 2;
+                    y = 0;
                 }
                 break;
             case 1: // enter
@@ -150,14 +150,14 @@ bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], i
                 rlutil::locate(3,5+y);
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 3;
                 }
                 break;
             case 115: // abajo
                 rlutil::locate(3,5+y);
                 y++;
                 if(y>3){
-                    y = 3;
+                    y = 0;
                 }
                 break;
             case 1: // enter
@@ -421,14 +421,14 @@ int estadisticasEtapa1(const int TAM, int kgAlimentos[], int diasDeArmado[], str
                 rlutil::locate(3,4+y);
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 5;
                 }
                 break;
             case 115: // abajo
                 rlutil::locate(3,4+y);
                 y++;
                 if(y>5){
-                    y = 5;
+                    y = 0;
                 }
                 break;
             case 1: // enter
@@ -514,14 +514,14 @@ bool recolectarMaterialesBalsa(const int TAM, int kgAlimentos[], int porcBalsa[]
                 rlutil::locate(3,5+y);
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 2;
                 }
                 break;
             case 115: // abajo
                 rlutil::locate(3,5+y);
                 y++;
                 if(y>2){
-                    y = 2;
+                    y = 0;
                 }
                 break;
             case 1: // enter
@@ -745,14 +745,14 @@ int estadisticasEtapa2(const int TAM, int kgAlimentos[], int diasDeArmado[], int
                 rlutil::locate(3,4+y);
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 4;
                 }
                 break;
             case 115: // abajo
                 rlutil::locate(3,4+y);
                 y++;
                 if(y>4){
-                    y = 4;
+                    y = 0;
                 }
                 break;
             case 1: // enter
@@ -861,7 +861,7 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
                 cout << " ";
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 3;
                 }
                 break;
             case 115: // abajo
@@ -869,7 +869,7 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
                 cout << " ";
                 y++;
                 if(y>3){
-                    y = 3;
+                    y = 0;
                 }
                 break;
             case 1: // enter
@@ -1086,14 +1086,14 @@ int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int
                 rlutil::locate(3,4+y);
                 y--;
                 if(y<0){
-                    y = 0;
+                    y = 4;
                 }
                 break;
             case 115: // abajo
                 rlutil::locate(3,4+y);
                 y++;
                 if(y>4){
-                    y = 4;
+                    y = 0;
                 }
                 break;
             case 1: // enter
