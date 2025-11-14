@@ -61,18 +61,18 @@ Cada decisión diaria afecta el progreso y la supervivencia del jugador, enfrent
 <h3>🪟 Windows</h3>
 <p>1. Instalar <a href="http://www.mingw.org/">MinGW</a> o usar Visual Studio</p>
 <p>2. Abrir la terminal y compilar:</p>
-<pre><code>g++ main.cpp Funciones.cpp -o Supervivencia.exe</code></pre>
+<pre><code>g++ main.cpp Funciones.cpp -o Jungla.exe</code></pre>
 <p>3. Ejecutar:</p>
-<pre><code>Supervivencia.exe</code></pre>
+<pre><code>Jungla.exe</code></pre>
 
 <h3>🐧 Linux</h3>
 <p>1. Instalar g++ si no está disponible:</p>
 <pre><code>sudo apt update
 sudo apt install g++</code></pre>
 <p>2. Compilar:</p>
-<pre><code>g++ main.cpp Funciones.cpp -o Supervivencia</code></pre>
+<pre><code>g++ main.cpp Funciones.cpp -o Jungla</code></pre>
 <p>3. Ejecutar:</p>
-<pre><code>./Supervivencia</code></pre>
+<pre><code>./Jungla</code></pre>
 
 <h2 id="estructura-del-proyecto">📂 Estructura del proyecto</h2>
 <pre><code>SupervivenciaEnLaSelva/
@@ -83,6 +83,7 @@ sudo apt install g++</code></pre>
 ├─ rlutil.h           # Librería externa para control de consola
 └─ README.md          # Documentación del proyecto
 </code></pre>
+
 
 
 
