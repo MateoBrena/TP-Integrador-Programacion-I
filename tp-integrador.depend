@@ -1,18 +1,21 @@
 # depslib dependency file v1.0
-1763085787 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.cpp
+1763142500 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.cpp
 	<iostream>
 	<time.h>
 	<string>
 	"rlutil.h"
+	"funciones_visuales.h"
 
-1763090285 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\main.cpp
+1763143051 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\main.cpp
 	<iostream>
 	<time.h>
 	<string>
 	"rlutil.h"
 	"Funciones.h"
+	"funciones_visuales.h"
+	"funciones_stats.h"
 
-1763082263 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.h
+1763136751 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.h
 	<string>
 
 1762960671 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\rlutil.h
@@ -28,4 +31,74 @@
 	<sys/ioctl.h>
 	<sys/types.h>
 	<sys/time.h>
+
+1763134087 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-visuales.h
+	<string>
+
+1763129345 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-visuales.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+
+1763128842 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-estadisticas.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+	"Funciones.h"
+	"Funciones-estadisticas.h"
+
+1763128841 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-estadisticas.h
+	<string>
+
+1763128552 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-visuales.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+	"Funciones.h"
+	"Funciones-estadisticas.h"
+
+1763128226 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-estadisticas.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+	"Funciones.h"
+	"Funciones-estadisticas.h"
+
+1763127252 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones.cpp
+	<iostream>
+	<time.h>
+	<string>
+	"rlutil.h"
+
+1763129483 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-stats.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+	"Funciones.h"
+	"Funciones-stats.h"
+
+1763129796 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones-stats.h
+	<string>
+
+1763134342 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funcionesvisuales.h
+	<string>
+
+1763142795 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones_visuales.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+	"funciones_visuales.h"
+
+1763139234 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones_visuales.h
+	<string>
+
+1763136746 c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones_stats.h
+	<string>
+
+1763138322 source:c:\users\matub\onedrive\escritorio\mateo\carrera tup\programacion i\tp-integrador\funciones_stats.cpp
+	<iostream>
+	"rlutil.h"
+	<string>
+	"funciones_visuales.h"
+	"funciones_stats.h"
 
