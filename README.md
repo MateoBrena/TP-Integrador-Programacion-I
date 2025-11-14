@@ -75,7 +75,7 @@ sudo apt install g++</code></pre>
 <pre><code>./Jungla</code></pre>
 
 <h2 id="estructura-del-proyecto">📂 Estructura del proyecto</h2>
-<pre><code>SupervivenciaEnLaSelva/
+<pre><code>Jungla/
 │
 ├─ main.cpp           # Archivo principal con la lógica del juego
 ├─ Funciones.h        # Declaración de funciones auxiliares
@@ -83,6 +83,7 @@ sudo apt install g++</code></pre>
 ├─ rlutil.h           # Librería externa para control de consola
 └─ README.md          # Documentación del proyecto
 </code></pre>
+
 
 
 
