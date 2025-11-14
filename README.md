@@ -56,7 +56,7 @@ El juego se desarrolla en varias etapas:
 
 ---
 
-## Compilación 💻
+## Compilacion 💻
 Se necesita un compilador de C++ compatible con C++11 o superior.
 
 ### 🪟 Windows
@@ -94,5 +94,6 @@ SupervivenciaEnLaSelva/
 ├─ Funciones.cpp      # Implementación de las funciones del juego
 ├─ rlutil.h           # Librería externa para control de consola
 └─ README.md          # Documentación del proyecto
+
 
 
