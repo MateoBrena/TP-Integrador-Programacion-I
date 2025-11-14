@@ -31,13 +31,13 @@ void nombreYEdad(const int TAM, string nombres[], int edades[]){
     cout << "Ingrese su edad: ";
     cin >> edades[0];
 
-    string nombresDisponibles[TAM-1] = {"Ana", "Luis", "Carlos", "Maria", "Juan", "Pedro", "Lucia"};
-    bool usado[TAM-1] = {false};
+    string nombresDisponibles[9] = {"Ana", "Luis", "Carlos", "Maria", "Juan", "Pedro", "Lucia", "Diego", "Sofia"};
+    bool usado[9] = {false};
 
     for(int i=1; i<TAM; i++){
         int indice;
         do{
-            indice = (rand()%7);
+            indice = (rand()%9);
         }while(usado[indice]);
 
         int edad = (rand()%71+18);
@@ -45,13 +45,9 @@ void nombreYEdad(const int TAM, string nombres[], int edades[]){
         nombres[i] = nombresDisponibles[indice];
         usado[indice] = true;
     }
-
-    for(int i=0; i<TAM; i++){
-        cout << nombres[i] << " " << edades[i] << endl;
-    }
 }
 
-bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], int &dia){
+void recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], int &dia){
 
     system("cls");
     int alimentoRecogido;
@@ -129,7 +125,6 @@ bool recolectarAlimentos(const int TAM, int kgAlimentos[], int porcRefugio[], in
         cout << "Llevas acumulado " << porcRefugio[0] << "% del refugio" << endl;
     }
     rlutil::setColor(rlutil::GREY);
-    return true;
 }
 
 bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], int diasDeArmado[], int &dia){
@@ -227,7 +222,7 @@ bool recolectarMateriales(const int TAM, int kgAlimentos[], int porcRefugio[], i
         rlutil::setColor(rlutil::GREY);
         return true;
     }else{
-        dia -= 1;
+        dia --;
         rlutil::locate(1,1);
         cout << "Te dije que el refugio ya esta 100% completado, mejor ir a recolectar alimentos" << endl << endl;
         return false;
@@ -357,7 +352,7 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int kgAlimentos[],
                     // el siguiente tiene 0 entonces no cambia
                     cambiar = false;
                 } else {
-                    // ambos distintos de 0 entonces comparar igual que los validos.
+                    // ambos distintos de 0 entonces compara igual que los validos.
                     if (copiaDiasDeArmado[j] > copiaDiasDeArmado[j + 1])
                         cambiar = true;
                     else if (copiaDiasDeArmado[j] == copiaDiasDeArmado[j + 1] &&
@@ -367,9 +362,9 @@ void tablaPosicionesEtapa1(const int TAM, int diasDeArmado[], int kgAlimentos[],
             }
 
             if (cambiar){
-                int auxDias = copiaDiasDeArmado[j];
+                int tempDias = copiaDiasDeArmado[j];
                 copiaDiasDeArmado[j] = copiaDiasDeArmado[j + 1];
-                copiaDiasDeArmado[j + 1] = auxDias;
+                copiaDiasDeArmado[j + 1] = tempDias;
 
                 int tempKg = copiaKgAlimentos[j];
                 copiaKgAlimentos[j] = copiaKgAlimentos[j + 1];
@@ -465,7 +460,8 @@ int estadisticasEtapa1(const int TAM, int kgAlimentos[], int diasDeArmado[], str
                         case 4:
                             system("cls");
                             if(jugadorVivo){
-                                return opcionStats = 5;
+                                opcionStats = y;
+                                return opcionStats;
                                 break;
                             }else{
                                 cout << "Jugador eliminado. No puede avanzar a la segunda etapa." << endl;
@@ -487,18 +483,13 @@ int estadisticasEtapa1(const int TAM, int kgAlimentos[], int diasDeArmado[], str
 
 void chequearVivos(const int TAM, int kgAlimentos[], int diasDeRefugio[], int jugadoresVivos[]){
 
-    int vivos = 0;
-
-    for (int i = 0; i < TAM; i++) {
-
+    for (int i = 0; i < TAM; i++){
         if(kgAlimentos[i] >= 14 && diasDeRefugio[i] != 0){
             jugadoresVivos[i] = 1;
-            vivos++;
         }else{
             jugadoresVivos[i] = 0;
         }
     }
-
 }
 
 bool recolectarMaterialesBalsa(const int TAM, int kgAlimentos[], int porcBalsa[], int diasDeArmado[], int &dia){
@@ -583,12 +574,12 @@ bool recolectarMaterialesBalsa(const int TAM, int kgAlimentos[], int porcBalsa[]
             cout << "Llevas acumulado 100% de la balsa" << endl;
         }else{
             rlutil::setColor(rlutil::RED);
-            cout << "Llevas acumulado " << porcBalsa[0] << "% de la balsa refugio" << endl;
+            cout << "Llevas acumulado " << porcBalsa[0] << "% de la balsa" << endl;
         }
         rlutil::setColor(rlutil::GREY);
         return true;
     }else{
-        dia -= 1;
+        dia --;
         rlutil::locate(1,1);
         cout << "Te dije que la balsa ya esta 100% completada, mejor ir a recolectar alimentos" << endl;
         return false;
@@ -615,7 +606,6 @@ void promedioAlimentosEtapa2(const int TAM, int kgAlimentos[], int jugadoresVivo
             cout << nombres[i] << ": " << kgAlimentos[i] << "Kgs" << endl;
         }
     }
-
 }
 
 void refugioMasRapidoEtapa2(const int TAM, int diasDeArmado[], int jugadoresVivos[], string nombres[]){
@@ -650,7 +640,6 @@ void tablaPosicionesEtapa2(const int TAM, int diasDeArmado[], int kgAlimentos[],
         copiaJugadoresVivos[i] = jugadoresVivos[i];
         copiaEdades[i] = edades[i];
     }
-
 
     for(int i=0; i<TAM - 1; i++){
         for(int j=0; j < TAM - i - 1; j++){
@@ -789,7 +778,8 @@ int estadisticasEtapa2(const int TAM, int kgAlimentos[], int diasDeArmado[], int
                         case 3:
                             system("cls");
                             if(jugadorVivo){
-                                return opcionStats = 4;
+                                opcionStats = y;
+                                return opcionStats;
                                 break;
                             }else{
                                 cout << "Jugador eliminado. No puede avanzar a la tercer etapa." << endl;
@@ -811,7 +801,6 @@ int estadisticasEtapa2(const int TAM, int kgAlimentos[], int diasDeArmado[], int
 
 void eleccionFinal(int eleccion, int horasDeLlegada[]){
 
-    // Textos de los 4 posibles finales
     string textos[4] = {
         // Gana 1
         "El camino elegido fue tranquilo y sin obstaculos. La corriente te ha guiado suavemente\n"
@@ -838,19 +827,18 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
     int resultado[4] = {1, 1, 0, 0};
 
     // Mezclamos textos y resultados ya que hay dos textos ganadores y dos perdedores, no se pueden mezclar.
-    for(int i=0; i<10; i++){
+    for(int i=0; i<10; i++){ // Mezclamos 10 veces, totalmente overkill pero bueno, te da la sensación de mejor mezclado.
         int a = rand()%4;
         int b = rand()%4;
-        // intercambio de textos
+        // intercambio en vector de textos
         string tempTexto = textos[a];
         textos[a] = textos[b];
         textos[b] = tempTexto;
-        // intercambio de resultados
+        // intercambio en vector de resultados
         int tempRes = resultado[a];
         resultado[a] = resultado[b];
         resultado[b] = tempRes;
     }
-
 
     string direcciones[4] = {"Norte", "Sur", "Este", "Oeste"};
 
@@ -912,7 +900,7 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
                         }
                 break;
             }
-    } while (opcionFinal != 0);
+    }while(opcionFinal != 0);
 
     if (resultado[y] == 1) {
         horasDeLlegada[0] = (rand()%12+4);
@@ -926,6 +914,7 @@ void eleccionFinal(int eleccion, int horasDeLlegada[]){
         cout << "Lamentablemente, no haz llegado a tiempo." << endl << endl;
     }
     rlutil::setColor(rlutil::GREY);
+
     if(horasDeLlegada[0] > 24){
         horasDeLlegada[0] = 0;
     }
@@ -983,7 +972,6 @@ void tablaPosicionesEtapa3(const int TAM, int horasDeLlegada[], int jugadoresViv
 
     for(int i = 0; i < TAM - 1; i++) {
         for(int j = 0; j < TAM - i - 1; j++){
-
             bool cambiar = false;
 
             if(copiaHoras[j] == 0 && copiaHoras[j + 1] != 0){
@@ -995,7 +983,6 @@ void tablaPosicionesEtapa3(const int TAM, int horasDeLlegada[], int jugadoresViv
             }
 
             if(cambiar){
-
                 string tempNombre = copiaNombres[j];
                 copiaNombres[j] = copiaNombres[j + 1];
                 copiaNombres[j + 1] = tempNombre;
@@ -1142,5 +1129,4 @@ int estadisticasEtapa3(const int TAM, int kgAlimentos[], int diasDeArmado[], int
     }while(opcionStats != 0);
 
     return opcionStats;
-
 }

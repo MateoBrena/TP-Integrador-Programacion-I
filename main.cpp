@@ -47,8 +47,6 @@ int main(){
         int comienzo = 1;
         int y = 0;
         do{
-            rlutil::setBackgroundColor(rlutil::BLACK);
-            rlutil::setColor(rlutil::GREY);
             rlutil::locate(1,1);
             cout<<"================================================="<<endl;
             mostrarSeleccionado(" Nuevo Juego ", 2, 2, y==0);
@@ -99,38 +97,38 @@ int main(){
             cout << "El dron vuela hacia arriba rapidamente y desaparece en cuestion de segundos, decides comenzar a recolectar." << endl << endl;
             system("pause");
             system("cls");
-            porcRefugio[0]=50;
+            //porcRefugio[0]=50;
             int eleccion;
             for(dia=0; dia<7; dia++){
                 rlutil::locate(1,1);
                 cout << "Dia " << dia+1 << endl << endl;
-                int ejeY = 0;
+                int y = 0;
                 int opp = 1;
                 do{
-                    mostrarSeleccionado("Recolectar alimentos", 3, 3, ejeY==0);
+                    mostrarSeleccionado("Recolectar alimentos", 3, 3, y==0);
                     if(porcRefugio[0] < 100){
-                        mostrarSeleccionado("Recolectar materiales", 3, 4, ejeY==1);
+                        mostrarSeleccionado("Recolectar materiales", 3, 4, y==1);
                     }else{
-                        mostrarSeleccionado("Refugio Completado", 3, 4, ejeY==1);
+                        mostrarSeleccionado("Refugio Completado", 3, 4, y==1);
                     }
                     int tecla = rlutil::getkey();
                     switch(tecla){
                         case 119: //arriba
-                            rlutil::locate(3,3+ejeY);
-                            ejeY--;
-                            if(ejeY<0){
-                                ejeY = 0;
+                            rlutil::locate(3,3+y);
+                            y--;
+                            if(y<0){
+                                y = 0;
                             }
                             break;
                         case 115: // abajo
-                            rlutil::locate(3,3+ejeY);
-                            ejeY++;
-                            if(ejeY>1){
-                                ejeY = 1;
+                            rlutil::locate(3,3+y);
+                            y++;
+                            if(y>1){
+                                y = 1;
                             }
                             break;
                         case 1: // enter
-                            if(ejeY == 0){
+                            if(y == 0){
                                 opp = 0;
                                 eleccion = 1;
                             }else{
@@ -142,10 +140,8 @@ int main(){
                 }while(opp != 0);
 
                 if(eleccion == 1){
-                    bool turnoAlimentosValido = recolectarAlimentos(TAM, kgAlimentos, porcRefugio, dia);
-                    if(turnoAlimentosValido){
-                        recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
-                    }
+                    recolectarAlimentos(TAM, kgAlimentos, porcRefugio, dia);
+                    recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                 }else if(eleccion == 2){
                     bool turnoMaterialesValido = recolectarMateriales(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
                     if(turnoMaterialesValido){
@@ -199,7 +195,7 @@ int main(){
                 cout << endl << "Juego terminado. Gracias por jugar" << endl;
                 return 0;
             }
-            if(resultadoEstadisticasEtapa1 == 5 && jugadorVivo){
+            if(resultadoEstadisticasEtapa1 == 4 && jugadorVivo){
                 chequearVivos(TAM, kgAlimentos, diasDeArmado, jugadoresVivos);
                 for(int i=0; i<TAM; i++){
                     if(jugadoresVivos[i] == 1){
@@ -225,7 +221,7 @@ int main(){
                 cout << "El dron se eleva lentamente, dando un ultimo giro sobre ti. 'Buena suerte, " << nombres[0] << ". La vas a necesitar...'" << endl << endl;
                 system("pause");
                 system("cls");
-                porcRefugio[0] = 50;
+                //porcRefugio[0] = 50;
                 for (dia=0; dia<6; dia++){
                     cout << "Dia " << dia+1 << endl;
                     int y = 0;
@@ -266,10 +262,8 @@ int main(){
                     }while(opp != 0);
 
                     if(eleccion == 1){
-                        bool turnoAlimentosValido = recolectarAlimentos(TAM, kgAlimentos, porcRefugio, dia);
-                        if(turnoAlimentosValido){
-                            recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
-                        }
+                        recolectarAlimentos(TAM, kgAlimentos, porcRefugio, dia);
+                        recoleccionBots(TAM, kgAlimentos, porcRefugio, diasDeArmado, jugadoresVivos, dia);
                     }else if(eleccion == 2){
                         bool turnoMaterialesValido = recolectarMaterialesBalsa(TAM, kgAlimentos, porcRefugio, diasDeArmado, dia);
                         if(turnoMaterialesValido){
@@ -327,7 +321,7 @@ int main(){
                     cout << endl << "Juego terminado. Gracias por jugar" << endl;
                     return 0;
                 }
-                if(resultadoEstadisticasEtapa2 == 4 && jugadorVivo){
+                if(resultadoEstadisticasEtapa2 == 3 && jugadorVivo){
                     cout << "Etapa 3" << endl << endl;
                     cout << "El sol comienza a ocultarse tras los arboles cuando escuchas nuevamente el zumbido familiar." << endl;
                     cout << "El dron aparece descendiendo lentamente, su camara fija en ti, como si no pudiera creer lo que ve." << endl;
@@ -373,11 +367,10 @@ int main(){
             }
         }
     }
-
-    if(opcion == 0){
-        system("cls");
-        cout << endl << "Juego terminado. Gracias por jugar" << endl;
-    }
+    system("cls");
+    cout << endl << "Juego terminado. Gracias por jugar" << endl;
 
     return 0;
 }
+
+Este es el main.cpp de mi proyecto de juego. Crees que puedes armar un readme.MD para acompañarlo?
